@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#160f1d">
+  <meta name="description" content="Ayyapan & Arthi — a love story from college days to a lifetime of togetherness.">
+  <title>Ayyapan ♡ Arthi | From College Days to Forever</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Great+Vibes&family=Italiana&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="site-body">
+  <div class="grain" aria-hidden="true"></div>
+  <div class="ambient-stars" aria-hidden="true"></div>
+  <div id="loading" class="loading-screen"><span class="mini-heart">♡</span><p>Preparing a little magic...</p></div>
+  <section id="gate" class="gate" hidden aria-live="polite"></section>
+
+  <div id="site" class="site" hidden>
+    <header class="site-header">
+      <div class="brandmark" aria-label="Our story"><span id="brand-initials">A <i>♥</i> A</span><small>OUR LITTLE FOREVER</small></div>
+      <div class="header-right"><span id="progress-label">CHAPTER 01 / 08</span><span class="tiny-sparkle">✧</span></div>
+    </header>
+    <div class="chapter-progress" aria-hidden="true"><span id="progress-bar"></span></div>
+    <main id="scenes" aria-live="polite"></main>
+    <nav class="chapter-nav" aria-label="Story controls"><button id="nav-back" class="text-nav" type="button">← Previous chapter</button><span id="chapter-caption">A love story, just for you</span><button id="nav-next" class="text-nav" type="button">Next chapter →</button></nav>
+    <footer class="site-footer"><span class="footer-monogram" id="footer-names">Ayyapan ♡ Arthi</span><span>From our first hello to forever</span><span id="footer-date">13 November 2026</span></footer>
+  </div>
+
+  <div id="photo-modal" class="photo-modal" hidden role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button id="modal-close" class="modal-x" type="button" aria-label="Close memory">×</button>
+    <div class="modal-layout">
+      <div class="modal-photo"><img id="modal-image" alt="A beautiful memory"><button id="modal-prev" type="button" class="modal-arrow left" aria-label="Previous photo">‹</button><button id="modal-next" type="button" class="modal-arrow right" aria-label="Next photo">›</button></div>
+      <div class="modal-copy"><span class="eyebrow" id="modal-kicker"></span><h2 id="modal-title"></h2><p id="modal-description"></p><p class="gold-italic" id="modal-caption"></p><span id="modal-count" class="muted-small"></span><button id="modal-done" class="button button-outline" type="button">Keep this memory ♡</button></div>
+    </div>
+  </div>
+
+  <button id="audio-toggle" class="audio-toggle" type="button" hidden aria-label="Play or pause music" title="Play music"><span class="audio-icon">♫</span><span class="audio-label">Music off</span></button>
+  <audio id="our-music" preload="none" loop playsinline></audio>
+  <div id="sparkle-layer" aria-hidden="true"></div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="defaults.js"></script>
+  <script src="site.js" defer></script>
+</body>
+</html>

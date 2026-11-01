@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#160f1d">
+  <title>Our Forever · Private Admin Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Great+Vibes&family=Italiana&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin-body">
+  <main id="admin-loading" class="admin-loading"><span class="mini-heart">♡</span><p>Opening your private creative studio...</p></main>
+  <div id="admin-setup" class="admin-auth" hidden>
+    <div class="admin-auth-card"><span class="eyebrow">ONE-TIME SETUP</span><h1>Connect your private studio.</h1><p>This studio needs a free Supabase project to make your edits live for everyone. First follow <b>README_TAMIL.md</b>, create the database and fill the <code>config.js</code> file.</p><p>Your website preview still works without the database. After setup you can change words, photos, songs, colors and dates here — no more coding.</p><a href="index.html" class="button button-primary">View website preview ↗</a></div>
+  </div>
+  <section id="admin-login" class="admin-auth" hidden>
+    <form id="login-form" class="admin-auth-card">
+      <div class="auth-heart">♡</div><span class="eyebrow">PRIVATE ADMIN ACCESS</span><h1>Welcome to your love-story studio.</h1>
+      <p>Only the authorized owner can edit or delete this website's content.</p>
+      <label>Email address<input id="login-email" type="email" autocomplete="username" required placeholder="you@example.com"></label>
+      <label>Password<input id="login-password" type="password" autocomplete="current-password" required placeholder="Enter your password" minlength="6"></label>
+      <button type="submit" class="button button-primary" id="login-button">Unlock Admin Studio →</button>
+      <p id="login-message" class="admin-message" role="status"></p>
+      <p class="login-help">Admin account must be created and authorized in Supabase first. Public visitors cannot access the editor.</p>
+    </form>
+  </section>
+  <div id="admin-app" class="admin-app" hidden>
+    <header class="admin-topbar"><div class="admin-top-left"><a href="index.html" class="admin-logo">A ♡ A</a><div><span class="eyebrow">PRIVATE CREATIVE STUDIO</span><h1>Our Forever — Editor</h1></div></div><div class="admin-top-actions"><span id="save-status" class="save-status">All changes published</span><button id="preview-button" type="button" class="button button-outline">Preview ↗</button><button id="save-button" type="button" class="button button-primary">Publish Changes</button><button id="logout-button" type="button" class="small-icon-button" title="Sign out">Log out</button></div></header>
+    <div class="admin-layout"><aside class="admin-sidebar"><div class="admin-nav" id="admin-nav"></div><div class="admin-note"><span class="eyebrow">A LITTLE REMINDER</span><p>Edits become visible to visitors only after clicking <b>Publish Changes</b>. No GitHub re-upload needed.</p><p>Your public site remains locked until the scheduled date. Preview is private for an approved admin.</p></div></aside>
+      <section class="admin-content"><div id="editor"></div></section></div>
+  </div>
+  <div id="admin-toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="defaults.js"></script>
+  <script src="admin.js" defer></script>
+</body>
+</html>

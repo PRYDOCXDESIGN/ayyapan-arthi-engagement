@@ -44,5 +44,89 @@
   <script src="config.js"></script>
   <script src="defaults.js"></script>
   <script src="site.js" defer></script>
+
+
+  
+<script>
+/* Romantic falling hearts */
+(function () {
+  'use strict';
+
+  if (window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+  ).matches) return;
+
+  const layer = document.createElement('div');
+  layer.className = 'romantic-heartfall';
+  layer.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(layer);
+
+  const mobile = window.matchMedia(
+    '(max-width: 720px)'
+  );
+
+  function dropHeart() {
+    if (document.hidden) return;
+
+    const limit = mobile.matches ? 6 : 10;
+    if (layer.childElementCount >= limit) return;
+
+    const heart = document.createElement('span');
+    heart.className = 'romantic-fall-heart';
+
+    heart.textContent =
+      Math.random() < 0.7 ? '\u2661' : '\u2665';
+
+    heart.style.setProperty(
+      '--heart-left',
+      (3 + Math.random() * 93) + 'vw'
+    );
+
+    heart.style.setProperty(
+      '--heart-size',
+      (10 + Math.random() * 10) + 'px'
+    );
+
+    heart.style.setProperty(
+      '--heart-duration',
+      (18 + Math.random() * 10) + 's'
+    );
+
+    heart.style.setProperty(
+      '--heart-opacity',
+      (0.13 + Math.random() * 0.20).toFixed(2)
+    );
+
+    heart.style.setProperty(
+      '--heart-sway',
+      ((Math.random() - 0.5) * 85) + 'px'
+    );
+
+    heart.style.setProperty(
+      '--heart-spin',
+      ((Math.random() - 0.5) * 65) + 'deg'
+    );
+
+    heart.addEventListener(
+      'animationend',
+      () => heart.remove(),
+      { once: true }
+    );
+
+    layer.appendChild(heart);
+  }
+
+  for (
+    let i = 0;
+    i < (mobile.matches ? 3 : 5);
+    i++
+  ) {
+    setTimeout(dropHeart, i * 1000);
+  }
+
+  setInterval(dropHeart, 2600);
+})();
+</script>
+
 </body>
 </html>

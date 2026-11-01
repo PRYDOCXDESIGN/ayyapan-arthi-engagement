@@ -265,3 +265,92 @@
     transition: none;
   }
 }
+
+
+
+
+/* AYYAPAN & ARTHI - PHOTO NO CROP FIX */
+
+/* TIMELINE PHOTOS */
+
+.time-card img {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: auto !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    display: block;
+}
+
+/* COLLEGE PHOTO */
+
+.college-frame {
+    aspect-ratio: auto !important;
+    height: auto !important;
+    max-height: none !important;
+    padding: 12px !important;
+    border-radius: 26px !important;
+    background: var(--surface);
+}
+
+.college-frame img {
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    display: block;
+    border-radius: 6px !important;
+}
+
+/* OPENING HERO PHOTO */
+
+.hero-image-wrap {
+    aspect-ratio: auto !important;
+    height: auto !important;
+    padding: 12px !important;
+    border-radius: 28px !important;
+    background: var(--surface);
+}
+
+.hero-image-wrap::after {
+    border-radius: 24px !important;
+}
+
+.hero-image-wrap img {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    display: block;
+    border-radius: 6px !important;
+}
+
+.hero-picture-stamp {
+    right: 0 !important;
+    bottom: -34px !important;
+}
+
+/* BEAUTIFUL MEMORIES */
+
+.memory-card .memory-cover {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: auto !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    display: block;
+}
+
+/* MOBILE ADJUSTMENTS */
+
+@media (max-width: 720px) {
+
+    .hero-image-wrap {
+        margin-bottom: 42px !important;
+    }
+
+    .college-frame {
+        transform: rotate(-1deg) !important;
+    }
+}

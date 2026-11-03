@@ -20,12 +20,36 @@
   <div id="site" class="site" hidden>
     <header class="site-header">
       <div class="brandmark" aria-label="Our story"><span id="brand-initials">A <i>♥</i> A</span><small>OUR LITTLE FOREVER</small></div>
-      <div class="header-right"><span id="progress-label">CHAPTER 01 / 08</span><span class="tiny-sparkle">✧</span></div>
+      <div class="header-right"><span id="progress-label">CHAPTER 01 / 10</span><span class="tiny-sparkle">✧</span></div>
     </header>
     <div class="chapter-progress" aria-hidden="true"><span id="progress-bar"></span></div>
     <main id="scenes" aria-live="polite"></main>
-    <nav class="chapter-nav" aria-label="Story controls"><button id="nav-back" class="text-nav" type="button">← Previous chapter</button><span id="chapter-caption">A love story, just for you</span><button id="nav-next" class="text-nav" type="button">Next chapter →</button></nav>
+    <nav class="chapter-nav" aria-label="Story controls"><button id="nav-back" class="text-nav" type="button">← Previous chapter</button><span id="chapter-caption">A love story, just for you</span><button id="nav-next" class="text-nav nav-next-ribbon" type="button" aria-label="Open next chapter through ribbon heart"><span class="mini-ribbon-heart" aria-hidden="true">♥<i>✦</i></span><span>Next memory</span></button></nav>
     <footer class="site-footer"><span class="footer-monogram" id="footer-names">Ayyapan ♡ Arthi</span><span>From our first hello to forever</span><span id="footer-date">11 November 2026</span></footer>
+  </div>
+
+
+  <!-- Accessible two-tap ribbon-heart scene transition -->
+  <div id="ribbon-transition" class="ribbon-transition" hidden role="dialog" aria-modal="true" aria-label="Unlock the next memory">
+    <div class="ribbon-stars" aria-hidden="true">✧ &nbsp; ♡ &nbsp; ✦</div>
+    <div class="ribbon-content">
+      <span class="eyebrow">ONE MORE LITTLE SECRET</span>
+      <h2 id="ribbon-title">A memory is waiting inside...</h2>
+      <button id="ribbon-heart-trigger" class="ribbon-heart-trigger" type="button" aria-label="Untie ribbon and open heart">
+        <span class="heart-door left" aria-hidden="true">♥</span>
+        <span class="heart-door right" aria-hidden="true">♥</span>
+        <span class="ribbon-glow" aria-hidden="true"></span>
+        <span class="ribbon-band" aria-hidden="true"></span>
+        <span class="ribbon-tail tail-left" aria-hidden="true"></span>
+        <span class="ribbon-tail tail-right" aria-hidden="true"></span>
+        <span class="ribbon-bow bow-left" aria-hidden="true"></span>
+        <span class="ribbon-bow bow-right" aria-hidden="true"></span>
+        <span class="ribbon-knot" aria-hidden="true"></span>
+        <span class="heart-peek" aria-hidden="true"><img id="ribbon-peek-image" src="assets/flower-moment.jpg" alt=""></span>
+      </button>
+      <p id="ribbon-help">Tap the heart to untie our next chapter ♡</p>
+      <button id="ribbon-skip" class="transition-skip" type="button">Continue without animation →</button>
+    </div>
   </div>
 
   <div id="photo-modal" class="photo-modal" hidden role="dialog" aria-modal="true" aria-labelledby="modal-title">
@@ -44,41 +68,6 @@
   <script src="config.js"></script>
   <script src="defaults.js"></script>
   <script src="site.js" defer></script>
-<script>
-/* Soft heart-fall decoration. Does not change countdown or admin. */
-(function () {
-  'use strict';
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  const layer = document.createElement('div');
-  layer.className = 'romantic-heartfall';
-  layer.setAttribute('aria-hidden', 'true');
-  document.body.appendChild(layer);
-
-  const mobile = window.matchMedia('(max-width: 720px)');
-  function dropHeart() {
-    if (document.hidden) return;
-    const limit = mobile.matches ? 6 : 10;
-    if (layer.childElementCount >= limit) return;
-
-    const heart = document.createElement('span');
-    heart.className = 'romantic-fall-heart';
-    heart.textContent = Math.random() < 0.7 ? '\u2661' : '\u2665';
-    heart.style.setProperty('--heart-left', (3 + Math.random() * 93) + 'vw');
-    heart.style.setProperty('--heart-size', (10 + Math.random() * 10) + 'px');
-    heart.style.setProperty('--heart-duration', (18 + Math.random() * 10) + 's');
-    heart.style.setProperty('--heart-opacity', (0.13 + Math.random() * 0.20).toFixed(2));
-    heart.style.setProperty('--heart-sway', ((Math.random() - 0.5) * 85) + 'px');
-    heart.style.setProperty('--heart-spin', ((Math.random() - 0.5) * 65) + 'deg');
-    heart.addEventListener('animationend', () => heart.remove(), { once: true });
-    layer.appendChild(heart);
-  }
-
-  for (let i = 0; i < (mobile.matches ? 3 : 5); i++) {
-    setTimeout(dropHeart, i * 1000);
-  }
-  setInterval(dropHeart, 2600);
-})();
-</script>
 </body>
 </html>

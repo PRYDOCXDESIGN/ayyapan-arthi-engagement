@@ -29,7 +29,8 @@
   let audioStarted = false, previewMode = false, toastTimer = null;
   let clockBase = 0, monotonicBase = 0, clockSynced = false;
   const nowMs = () => clockSynced ? clockBase + (performance.now() - monotonicBase) : Date.now();
-  const N = 8;
+  const N = 10;
+  let proposalRevealed = false, transitionTarget = null, transitionBusy = false;
 
   function showToast(message) {
     const el = $('#toast'); el.textContent = message; el.classList.add('show');
@@ -99,7 +100,7 @@
   function initials() {
     const a = data.couple.nameOne?.trim()?.[0] || 'A';
     const b = data.couple.nameTwo?.trim()?.[0] || 'A';
-    return `${html(a)} <i>♥</i> ${html(b)}`;
+    return `${html(a.toUpperCase())} <i>♥</i> ${html(b.toUpperCase())}`;
   }
   function totalPhotos(chapter) { return Array.isArray(chapter.photos) ? chapter.photos : []; }
   function mainImage(chapter) { return media(totalPhotos(chapter)[0]?.url || data.media.hero); }
@@ -137,6 +138,7 @@
     }
     tick(); if (!g.hidden && !gateTimer) gateTimer = setInterval(tick, 1000);
   }
+  function fitClass(value) {return value === 'cover' ? 'fit-cover' : 'fit-contain';}
   function renderWelcome() {
     return `<section class="scene hero-scene active align-${data.layout?.heroAlign === 'center' ? 'center' : 'left'} focus-${['top','center','bottom'].includes(data.layout?.heroFocus) ? data.layout.heroFocus : 'center'}" data-scene="0">
       <div class="hero-content">
@@ -148,9 +150,13 @@
         <button class="button button-primary button-large" data-action="begin" type="button">${html(data.copy.ctaStart)} <span>✧</span></button>
         <p class="helper-note" style="margin-top:20px">${html(data.copy.heroNote)}</p>
       </div>
-      <div class="hero-image-wrap"><img src="${media(data.media.hero)}" alt="Our love story illustration"><div class="hero-picture-stamp"><span>Forever</span><small>${html(displayDate().toUpperCase())}</small></div></div>
+      <div class="hero-photo-story">
+        <figure class="meet-frame ${fitClass(data.layout?.meetFit)}"><img src="${media(data.media.firstMeet || data.memories?.[0]?.photos?.[0]?.url)}" alt="Our first meeting memory"><figcaption><small>01 · OUR FIRST MEET</small><strong>${html(data.copy.meetTitle)}</strong><span>${html(data.copy.meetCaption)}</span></figcaption></figure>
+        <figure class="sitting-frame ${fitClass(data.layout?.heroFit)}"><img src="${media(data.media.hero)}" alt="Ayyapan and Arthi together"><figcaption><small>02 · THE LITTLE MOMENTS</small><strong>${html(data.copy.sittingTitle)}</strong><span>${html(data.copy.sittingCaption)}</span></figcaption><div class="sitting-stamp">Forever <small>${html(displayDate())}</small></div></figure>
+      </div>
     </section>`;
   }
+
   function renderHearts() {
     return `<section class="scene hearts-scene" data-scene="1">
       <div class="section-top"><span class="eyebrow">01 · THE INVISIBLE THREAD</span><h2 class="display">${html(data.copy.heartsTitle)}</h2><p class="lead">${html(data.copy.heartsQuote)}</p></div>
@@ -189,25 +195,46 @@
       <div id="puzzle-letter" class="puzzle-letter" ${puzzleSolved ? '' : 'hidden'}><span class="eyebrow">THE SECRET YOU UNLOCKED · 💌</span><h3>${html(data.copy.puzzleLetterTitle)}</h3><p>${html(data.copy.puzzleLetter)}</p><button type="button" class="button button-primary" data-action="next">${html(data.copy.ctaPuzzleNext)}</button></div>
     </section>`;
   }
+  function renderPoetry() {
+    return `<section class="scene poetry-scene" data-scene="5">
+      <div class="section-top"><span class="eyebrow">05 · THE WORDS BETWEEN OUR HEARTBEATS</span><h2 class="display">${html(data.copy.poetryTitle)}</h2><p class="lead">${html(data.copy.poetryIntro)}</p></div>
+      <div class="poetry-grid">${(data.poetry || []).map((p,i)=>`<article class="poem-card"><span class="poem-number">♡ &nbsp; ${String(i+1).padStart(2,'0')}</span><h3>${html(p.title)}</h3><p>${text(p.verse)}</p><span class="poem-flourish">✧　♡　✧</span></article>`).join('')}</div>
+      <div class="scene-actions"><button class="button button-primary" type="button" data-action="next">${html(data.copy.ctaPoetryNext)}</button></div>
+    </section>`;
+  }
   function renderTimeline() {
-    return `<section class="scene" data-scene="5">
-      <div class="section-top"><span class="eyebrow">05 · FROM THEN TO NOW</span><h2 class="display">${html(data.copy.timelineTitle)}</h2><p class="lead">${html(data.copy.timelineIntro)}</p></div>
+    return `<section class="scene" data-scene="6">
+      <div class="section-top"><span class="eyebrow">06 · FROM THEN TO NOW</span><h2 class="display">${html(data.copy.timelineTitle)}</h2><p class="lead">${html(data.copy.timelineIntro)}</p></div>
       <div class="timeline">${(data.timeline || []).map(item => `<article class="time-row"><div class="time-card">${item.image ? `<img src="${itemImage(item)}" alt="${html(item.title)}" loading="lazy">` : ''}<div class="time-text"><span class="eyebrow">${html(item.when)}</span><h3>${html(item.title)}</h3><p>${html(item.description)}</p></div></div></article>`).join('')}</div>
       <div class="scene-actions"><p class="gold-italic" style="text-align:center;max-width:630px">${html(data.copy.timelineOutro)}</p><button type="button" class="button button-primary" data-action="next">${html(data.copy.ctaTimelineNext)}</button></div>
     </section>`;
   }
+  function renderProposal() {
+    return `<section class="scene proposal-scene" data-scene="7">
+      <div class="section-top"><span class="eyebrow">07 · AN UNFORGETTABLE PROMISE</span><h2 class="display">${html(data.copy.proposalTitle)}</h2><p class="lead">${html(data.copy.proposalIntro)}</p></div>
+      <div class="proposal-stage ${proposalRevealed ? 'revealed' : ''}"><div class="proposal-photo ${fitClass(data.layout?.proposalFit)}"><img src="${media(data.media.proposal)}" alt="A romantic proposal memory"><span class="proposal-photo-glow" aria-hidden="true"></span></div><div class="proposal-ring" aria-hidden="true">♢</div><div class="proposal-copy" id="proposal-copy" ${proposalRevealed ? '' : 'hidden'}><span class="eyebrow">A PROMISE FROM THE HEART</span><p>${html(data.copy.proposalSecret)}</p></div></div>
+      <div class="scene-actions"><button type="button" id="proposal-reveal" class="button button-primary button-large" data-action="reveal-proposal" ${proposalRevealed ? 'hidden' : ''}>${html(data.copy.ctaProposalReveal)}</button><button type="button" id="proposal-next" class="button button-outline" data-action="next" ${proposalRevealed ? '' : 'hidden'}>${html(data.copy.ctaProposalNext)}</button></div>
+    </section>`;
+  }
   function renderFinal() {
-    return `<section class="scene finale-scene" data-scene="6"><div class="section-top"><span class="eyebrow">06 · THE NEXT CHAPTER IS FOREVER</span><h2 class="display">${html(data.copy.finalTitle)}</h2><p class="lead">${html(data.copy.finalIntro)}</p></div>
+    return `<section class="scene finale-scene" data-scene="8"><div class="section-top"><span class="eyebrow">08 · THE NEXT CHAPTER IS FOREVER</span><h2 class="display">${html(data.copy.finalTitle)}</h2><p class="lead">${html(data.copy.finalIntro)}</p></div>
       <div class="final-hearts ${finalOpened ? 'joined' : ''}" id="final-hearts"><button class="final-heart" type="button" data-action="final-heart" aria-label="Touch the heart to reveal a secret">♥</button><span class="final-heart secondary" aria-hidden="true">♥</span></div>
       <div id="final-secret" class="final-secret" ${finalOpened ? '' : 'hidden'}><p class="lead" style="margin:10px auto 22px">${html(data.copy.finalLead)}</p><h3 class="final-question">${html(data.copy.finalQuestion)}</h3><button type="button" class="button button-primary button-large" data-action="next">${html(data.copy.ctaFinal)}</button></div>
       <p class="helper-note" id="final-hint" ${finalOpened ? 'hidden' : ''}>There is something hidden inside this heartbeat. Touch the heart. ♡</p>
     </section>`;
   }
   function renderLetter() {
-    return `<section class="scene final-message-scene" data-scene="7"><div class="final-letter-frame"><span class="eyebrow">07 · A PROMISE FROM MY HEART</span><h1>${html(data.copy.finalLetterTitle)}</h1><div class="letter-salutation">To my forever person,</div><div class="letter-prose">${text(data.copy.finalLetter)}</div><div class="letter-seal">${html(data.couple.nameOne)} & ${html(data.couple.nameTwo)} ♡</div></div><p class="final-bottom">${html(data.copy.endingLine)}</p><p class="helper-note" style="text-align:center;margin-top:18px">${html(displayDate())} · Our engagement, our promise, our forever.</p><div class="scene-actions"><button type="button" class="button button-outline" data-action="restart">${html(data.copy.ctaRestart)}</button></div></section>`;
+    const gift=data.gifts?.style || 'rose-chocolates';
+    const box1='<span class="chocolate">♥</span>';
+    const rose='<span class="gift-rose" aria-hidden="true"><span class="rose-flower">✿</span><span class="rose-stem"></span></span>';
+    const present=gift==='rose-teddy' ? `${rose}<span class="gift-teddy">🧸</span><span class="chocolate">♥</span>` : `${box1}${rose}${box1}`;
+    return `<section class="scene final-message-scene" data-scene="9"><div class="final-letter-frame"><span class="eyebrow">09 · A PROMISE FROM MY HEART</span><h1>${html(data.copy.finalLetterTitle)}</h1><div class="letter-salutation">To my forever person,</div><div class="letter-prose">${text(data.copy.finalLetter)}</div><div class="letter-seal">${html(data.couple.nameOne)} & ${html(data.couple.nameTwo)} ♡</div></div>
+      <div class="gift-finale"><span class="eyebrow">A LITTLE GIFT FOR YOU</span><h2 class="display">${html(data.copy.giftTitle)}</h2><div class="gift-tray" aria-label="Romantic rose and sweets">${present}</div><p>${html(data.copy.giftMessage)}</p><span class="script gift-names">${html(data.couple.nameOne)} ♡ ${html(data.couple.nameTwo)}</span></div>
+      <p class="final-bottom">${html(data.copy.endingLine)}</p><p class="helper-note" style="text-align:center;margin-top:18px">${html(displayDate())} · Our engagement, our promise, our forever.</p><div class="scene-actions"><button type="button" class="button button-outline" data-action="restart">${html(data.copy.ctaRestart)}</button></div></section>`;
   }
+
   function renderApp() {
-    $('#scenes').innerHTML = [renderWelcome(),renderHearts(),renderCollege(),renderMemories(),renderPuzzle(),renderTimeline(),renderFinal(),renderLetter()].join('');
+    $('#scenes').innerHTML = [renderWelcome(),renderHearts(),renderCollege(),renderMemories(),renderPuzzle(),renderPoetry(),renderTimeline(),renderProposal(),renderFinal(),renderLetter()].join('');
     $('#brand-initials').innerHTML = initials();
     $('#footer-names').textContent = `${data.couple.nameOne} ♡ ${data.couple.nameTwo}`;
     $('#footer-date').textContent = displayDate();
@@ -217,26 +244,79 @@
     else $('#audio-toggle').hidden = true;
     shufflePuzzle(); refreshPuzzle(); refreshMemoryProgress(); goTo(0, false);
   }
+
   function startStory() {
     clearInterval(gateTimer); gateTimer = null;
     $('#gate').hidden = true; $('#loading').hidden = true; $('#site').hidden = false;
     renderApp();
     if (previewMode) showToast('Private admin preview — visitors still see the countdown.');
   }
+  function sceneEnabled(index) {
+    if (index === 5 && data.features?.poetry === false) return false;
+    if (index === 7 && data.features?.proposal === false) return false;
+    return true;
+  }
+  function forwardIndex(index) { while (index < N-1 && !sceneEnabled(index)) index++; return index; }
+  function backwardIndex(index) { while (index > 0 && !sceneEnabled(index)) index--; return index; }
   function goTo(next, scroll = true) {
+    const movingForward = next >= sceneIndex;
+    next = movingForward ? forwardIndex(next) : backwardIndex(next);
     if (next < 0 || next > Math.min(maxUnlocked, N-1)) return;
     sceneIndex = next;
-    if (sceneIndex === 5) maxUnlocked = Math.max(maxUnlocked, 6); // timeline can proceed to the final surprise
+    if (sceneIndex === 5) maxUnlocked = Math.max(maxUnlocked,6);
+    if (sceneIndex === 6) maxUnlocked = Math.max(maxUnlocked,forwardIndex(7));
+    if (sceneIndex === 7 && proposalRevealed) maxUnlocked = Math.max(maxUnlocked,8);
+    if (sceneIndex === 9) maxUnlocked = 9;
     $$('.scene').forEach(scene => scene.classList.toggle('active', Number(scene.dataset.scene) === sceneIndex));
-    $('#progress-label').textContent = `CHAPTER ${String(sceneIndex+1).padStart(2,'0')} / 08`;
+    $('#progress-label').textContent = `CHAPTER ${String(sceneIndex+1).padStart(2,'0')} / ${String(N).padStart(2,'0')}`;
     $('#progress-bar').style.width = `${(sceneIndex+1) / N * 100}%`;
     $('#nav-back').disabled = sceneIndex === 0;
-    $('#nav-next').disabled = sceneIndex >= maxUnlocked || sceneIndex === N-1;
-    const labels = ['Our little forever','Two hearts, one destiny','Where it all began','Memories worth keeping','A secret inside each piece','Every year brought us closer','A question from my heart','The beautiful beginning of forever'];
+    $('#nav-next').disabled = forwardIndex(sceneIndex+1)>maxUnlocked || sceneIndex===N-1;
+    const labels = ['Our little forever','Two hearts, one destiny','Where it all began','Memories worth keeping','A secret inside each piece','Love in little poems','Every year brought us closer','The moment we chose forever','A question from my heart','The beautiful beginning of forever'];
     $('#chapter-caption').textContent = labels[sceneIndex];
-    if (scroll) window.scrollTo({ top:0, behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto':'smooth' });
+    if (scroll) window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
   }
-  function unlock(index) { maxUnlocked = Math.max(maxUnlocked, Math.min(index, N-1)); $('#nav-next').disabled = sceneIndex >= maxUnlocked; }
+  function unlock(index) {
+    maxUnlocked = Math.max(maxUnlocked, Math.min(index, N-1));
+    if (!sceneEnabled(index)) maxUnlocked = Math.max(maxUnlocked,forwardIndex(index));
+    $('#nav-next').disabled = forwardIndex(sceneIndex+1) > maxUnlocked || sceneIndex === N-1;
+  }
+  function transitionImage(index) {
+    if (index===1) return data.media.hero;
+    if (index===2) return data.media.firstMeet;
+    if (index===3) return data.memories?.[0]?.photos?.[0]?.url;
+    if (index===6) return data.timeline?.[0]?.image;
+    if (index===7) return data.media.proposal;
+    return data.media.hero;
+  }
+  function requestTransition(next) {
+    const target=forwardIndex(next);
+    if (target >= N || target > maxUnlocked || transitionBusy) return;
+    if(data.features?.ribbonTransitions === false || window.matchMedia('(prefers-reduced-motion: reduce)').matches){goTo(target);return;}
+    transitionTarget = target;
+    const overlay=$('#ribbon-transition'); overlay.hidden=false; overlay.classList.remove('is-opening');
+    $('#ribbon-heart-trigger').disabled=false;
+    $('#ribbon-title').textContent = 'A memory is waiting inside...';
+    $('#ribbon-help').textContent = data.copy.ribbonPrompt || 'Tap the heart to untie the next little chapter.';
+    $('#ribbon-peek-image').src=media(transitionImage(target));
+    document.body.style.overflow='hidden';
+    $('#ribbon-heart-trigger').focus();
+  }
+  function completeTransition() {
+    const target=transitionTarget;transitionTarget=null;transitionBusy=false;
+    $('#ribbon-transition').hidden=true;$('#ribbon-transition').classList.remove('is-opening');
+    document.body.style.overflow=''; if(target!==null) goTo(target);
+  }
+  function openRibbon() {
+    if (transitionTarget===null || transitionBusy) return;
+    transitionBusy=true;
+    $('#ribbon-heart-trigger').disabled=true;
+    $('#ribbon-transition').classList.add('is-opening');
+    $('#ribbon-title').textContent='Our next chapter is opening ♡';
+    twinkleFrom(innerWidth/2,innerHeight/2,19);
+    setTimeout(completeTransition, 1350);
+  }
+
   function twinkleFrom(x, y, amount=11) {
     const layer = $('#sparkle-layer');
     for (let i=0;i<amount;i++) {
@@ -318,6 +398,25 @@
       }
     }
   }
+  function initHeartfall() {
+    if(data.features?.fallingHearts === false || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const layer=document.createElement('div');layer.className='romantic-heartfall';layer.setAttribute('aria-hidden','true');document.body.appendChild(layer);
+    const mobile=window.matchMedia('(max-width: 720px)');
+    function drop() {
+      if(document.hidden || layer.childElementCount >= (mobile.matches ? 6 : 10)) return;
+      const heart=document.createElement('span');heart.className='romantic-fall-heart';
+      heart.textContent=Math.random()<.72?'♡':'♥';
+      heart.style.setProperty('--heart-left',(3+Math.random()*93)+'vw');
+      heart.style.setProperty('--heart-size',(10+Math.random()*10)+'px');
+      heart.style.setProperty('--heart-duration',(17+Math.random()*12)+'s');
+      heart.style.setProperty('--heart-opacity',(.13+Math.random()*.2).toFixed(2));
+      heart.style.setProperty('--heart-sway',((Math.random()-.5)*80)+'px');
+      heart.style.setProperty('--heart-spin',((Math.random()-.5)*65)+'deg');
+      heart.addEventListener('animationend',()=>heart.remove(),{once:true});layer.appendChild(heart);
+    }
+    for(let i=0;i<(mobile.matches?2:4);i++)setTimeout(drop,i*950);
+    setInterval(drop,2600);
+  }
   async function verifyPreview() {
     const local = ['file:'].includes(location.protocol) || ['localhost','127.0.0.1'].includes(location.hostname);
     if (local) return true; // local demo; never opens the published GitHub URL
@@ -343,15 +442,15 @@
         }
       }
     } catch (err) { console.warn('Could not fetch live website copy:',err); }
-    theme();applyHeroTypography();previewMode=await verifyPreview();
+    theme();applyHeroTypography();initHeartfall();previewMode=await verifyPreview();
     if(previewMode || isOpen()) startStory(); else renderGate();
   }
   $('#scenes').addEventListener('click', event => {
     const target=event.target.closest('[data-action]'); if(!target)return;
     const action=target.dataset.action;
-    if(action==='begin'){maybeStartMusic();unlock(1);goTo(1);twinkleFrom(innerWidth/2,innerHeight/2,13);}
+    if(action==='begin'){maybeStartMusic();unlock(1);requestTransition(1);}
     if(action==='join-hearts' && !merged){merged=true;$('#heart-stage').classList.add('merged');target.hidden=true;twinkleFrom(innerWidth/2,innerHeight/2,22);setTimeout(() => {$('#after-hearts').hidden=false;unlock(2);},950);}
-    if(action==='next')goTo(sceneIndex+1);
+    if(action==='next')requestTransition(sceneIndex+1);
     if(action==='quiz-choice' && !quizSolved){
       const index=Number(target.dataset.choice);const opt=data.collegeOptions?.[index];
       if(opt?.correct){quizSolved=true;target.classList.add('is-correct');$('#quiz-feedback').textContent='Of course! That was where our forever began. ♡';$('#college-next').hidden=false;unlock(3);twinkleFrom(innerWidth/2,innerHeight/2,12);}
@@ -361,16 +460,19 @@
     if(action==='puzzle-pick')choosePiece(target.dataset.id);
     if(action==='puzzle-remove' && !puzzleSolved){selectedCards.splice(Number(target.dataset.slot),1);refreshPuzzle();}
     if(action==='reset-puzzle' && !puzzleSolved){selectedCards=[];shufflePuzzle();refreshPuzzle();}
-    if(action==='final-heart' && !finalOpened){finalOpened=true;$('#final-hearts').classList.add('joined');$('#final-hint').hidden=true;twinkleFrom(innerWidth/2,innerHeight/2,28);setTimeout(()=>{$('#final-secret').hidden=false;unlock(7);},900);}
+    if(action==='reveal-proposal' && !proposalRevealed){proposalRevealed=true;$('.proposal-stage').classList.add('revealed');$('#proposal-copy').hidden=false;$('#proposal-reveal').hidden=true;$('#proposal-next').hidden=false;unlock(8);twinkleFrom(innerWidth/2,innerHeight/2,16);}
+    if(action==='final-heart' && !finalOpened){finalOpened=true;$('#final-hearts').classList.add('joined');$('#final-hint').hidden=true;twinkleFrom(innerWidth/2,innerHeight/2,28);setTimeout(()=>{$('#final-secret').hidden=false;unlock(9);},900);}
     if(action==='restart'){goTo(0);}
   });
   $('#nav-back').addEventListener('click',()=>goTo(sceneIndex-1));
-  $('#nav-next').addEventListener('click',()=>goTo(sceneIndex+1));
+  $('#nav-next').addEventListener('click',()=>requestTransition(sceneIndex+1));
+  $('#ribbon-heart-trigger').addEventListener('click',openRibbon);
+  $('#ribbon-skip').addEventListener('click',completeTransition);
   $('#modal-close').addEventListener('click',closeModal);$('#modal-done').addEventListener('click',closeModal);
   $('#photo-modal').addEventListener('click',event=>{if(event.target.id==='photo-modal')closeModal();});
   $('#modal-prev').addEventListener('click',()=>changeModalPhoto(-1));
   $('#modal-next').addEventListener('click',()=>changeModalPhoto(1));
-  document.addEventListener('keydown',event=>{if(!$('#photo-modal').hidden){if(event.key==='Escape')closeModal();if(event.key==='ArrowRight')changeModalPhoto(1);if(event.key==='ArrowLeft')changeModalPhoto(-1);}});
+  document.addEventListener('keydown',event=>{if(event.key==='Escape' && !$('#ribbon-transition').hidden && !transitionBusy){transitionTarget=null;$('#ribbon-transition').hidden=true;document.body.style.overflow='';}if(!$('#photo-modal').hidden){if(event.key==='Escape')closeModal();if(event.key==='ArrowRight')changeModalPhoto(1);if(event.key==='ArrowLeft')changeModalPhoto(-1);}});
   $('#audio-toggle').addEventListener('click',async()=>{
     const audio=$('#our-music');
     if(audio.paused){audio.volume=.45;try{await audio.play();audioStarted=true;}catch{showToast('Your browser could not play the audio.');}}

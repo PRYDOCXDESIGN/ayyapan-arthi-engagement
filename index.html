@@ -8,7 +8,7 @@
   <title>Ayyapan ♡ Arthi | From College Days to Forever</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Great+Vibes&family=Italiana&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&amp;family=Allura&amp;family=Cormorant+Garamond:wght@400;600&amp;family=DM+Sans:wght@400;500;600;700&amp;family=Dancing+Script:wght@400;600&amp;family=Great+Vibes&amp;family=Italiana&amp;family=Parisienne&amp;family=Pinyon+Script&amp;family=Playfair+Display:wght@400;600&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="site-body">
@@ -25,7 +25,7 @@
     <div class="chapter-progress" aria-hidden="true"><span id="progress-bar"></span></div>
     <main id="scenes" aria-live="polite"></main>
     <nav class="chapter-nav" aria-label="Story controls"><button id="nav-back" class="text-nav" type="button">← Previous chapter</button><span id="chapter-caption">A love story, just for you</span><button id="nav-next" class="text-nav" type="button">Next chapter →</button></nav>
-    <footer class="site-footer"><span class="footer-monogram" id="footer-names">Ayyapan ♡ Arthi</span><span>From our first hello to forever</span><span id="footer-date">13 November 2026</span></footer>
+    <footer class="site-footer"><span class="footer-monogram" id="footer-names">Ayyapan ♡ Arthi</span><span>From our first hello to forever</span><span id="footer-date">11 November 2026</span></footer>
   </div>
 
   <div id="photo-modal" class="photo-modal" hidden role="dialog" aria-modal="true" aria-labelledby="modal-title">
@@ -44,89 +44,41 @@
   <script src="config.js"></script>
   <script src="defaults.js"></script>
   <script src="site.js" defer></script>
-
-
-  
 <script>
-/* Romantic falling hearts */
+/* Soft heart-fall decoration. Does not change countdown or admin. */
 (function () {
   'use strict';
-
-  if (window.matchMedia(
-    '(prefers-reduced-motion: reduce)'
-  ).matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   const layer = document.createElement('div');
   layer.className = 'romantic-heartfall';
   layer.setAttribute('aria-hidden', 'true');
   document.body.appendChild(layer);
 
-  const mobile = window.matchMedia(
-    '(max-width: 720px)'
-  );
-
+  const mobile = window.matchMedia('(max-width: 720px)');
   function dropHeart() {
     if (document.hidden) return;
-
     const limit = mobile.matches ? 6 : 10;
     if (layer.childElementCount >= limit) return;
 
     const heart = document.createElement('span');
     heart.className = 'romantic-fall-heart';
-
-    heart.textContent =
-      Math.random() < 0.7 ? '\u2661' : '\u2665';
-
-    heart.style.setProperty(
-      '--heart-left',
-      (3 + Math.random() * 93) + 'vw'
-    );
-
-    heart.style.setProperty(
-      '--heart-size',
-      (10 + Math.random() * 10) + 'px'
-    );
-
-    heart.style.setProperty(
-      '--heart-duration',
-      (18 + Math.random() * 10) + 's'
-    );
-
-    heart.style.setProperty(
-      '--heart-opacity',
-      (0.13 + Math.random() * 0.20).toFixed(2)
-    );
-
-    heart.style.setProperty(
-      '--heart-sway',
-      ((Math.random() - 0.5) * 85) + 'px'
-    );
-
-    heart.style.setProperty(
-      '--heart-spin',
-      ((Math.random() - 0.5) * 65) + 'deg'
-    );
-
-    heart.addEventListener(
-      'animationend',
-      () => heart.remove(),
-      { once: true }
-    );
-
+    heart.textContent = Math.random() < 0.7 ? '\u2661' : '\u2665';
+    heart.style.setProperty('--heart-left', (3 + Math.random() * 93) + 'vw');
+    heart.style.setProperty('--heart-size', (10 + Math.random() * 10) + 'px');
+    heart.style.setProperty('--heart-duration', (18 + Math.random() * 10) + 's');
+    heart.style.setProperty('--heart-opacity', (0.13 + Math.random() * 0.20).toFixed(2));
+    heart.style.setProperty('--heart-sway', ((Math.random() - 0.5) * 85) + 'px');
+    heart.style.setProperty('--heart-spin', ((Math.random() - 0.5) * 65) + 'deg');
+    heart.addEventListener('animationend', () => heart.remove(), { once: true });
     layer.appendChild(heart);
   }
 
-  for (
-    let i = 0;
-    i < (mobile.matches ? 3 : 5);
-    i++
-  ) {
+  for (let i = 0; i < (mobile.matches ? 3 : 5); i++) {
     setTimeout(dropHeart, i * 1000);
   }
-
   setInterval(dropHeart, 2600);
 })();
 </script>
-
 </body>
 </html>

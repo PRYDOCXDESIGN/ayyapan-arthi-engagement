@@ -39,9 +39,12 @@
 /* Owner-adjustable hero alignment and image framing */
 .hero-scene.align-center .hero-content{text-align:center}.hero-scene.align-center .hero-content .hero-title,.hero-scene.align-center .hero-content .hero-quote{margin-left:auto;margin-right:auto}.hero-scene.align-center .hero-content .small-divider{justify-content:center}.hero-scene.focus-top .hero-image-wrap img{object-position:center 12%}.hero-scene.focus-center .hero-image-wrap img{object-position:center 46%}.hero-scene.focus-bottom .hero-image-wrap img{object-position:center 82%}
 
-/* AYYAPAN & ARTHI - FINAL ROMANTIC POLISH */
+/* ========================================================
+   AYYAPAN + ARTHI | FINAL ROMANTIC POLISH
+   Add this at the VERY END of style.css. Leave old CSS intact.
+   ======================================================== */
 
-/* Soft falling hearts */
+/* 1. Soft floating hearts across all chapters and countdown */
 .romantic-heartfall {
   position: fixed;
   inset: 0;
@@ -50,58 +53,41 @@
   pointer-events: none;
   contain: layout paint;
 }
-
 .romantic-fall-heart {
   position: absolute;
   top: -12vh;
   left: var(--heart-left);
-  font: 400 var(--heart-size)/1 Georgia, serif;
+  font: 400 var(--heart-size) / 1 Georgia, serif;
   color: var(--accent, #df9eaf);
   opacity: 0;
   will-change: transform, opacity;
   animation: romanticHeartFall var(--heart-duration) linear forwards;
-  text-shadow: 0 0 10px rgba(230,155,184,.12);
+  text-shadow: 0 0 10px rgba(230, 155, 184, .12);
 }
-
 @keyframes romanticHeartFall {
-  0% {
-    transform: translate3d(0,-15px,0) rotate(-12deg);
-    opacity: 0;
-  }
-  12%, 85% {
-    opacity: var(--heart-opacity);
-  }
-  100% {
-    transform: translate3d(var(--heart-sway),122vh,0)
-      rotate(var(--heart-spin));
-    opacity: 0;
-  }
+  0% { transform: translate3d(0, -15px, 0) rotate(-12deg); opacity: 0; }
+  12% { opacity: var(--heart-opacity); }
+  85% { opacity: var(--heart-opacity); }
+  100% { transform: translate3d(var(--heart-sway), 122vh, 0) rotate(var(--heart-spin)); opacity: 0; }
 }
 
-/* Romantic ivory love letter */
+/* 2. Handwritten letter on warm ivory paper */
 .final-letter-frame {
   isolation: isolate;
   color: #4c343b;
   background:
-    radial-gradient(circle at 9% 7%,
-      rgba(230,164,166,.19),transparent 34%),
-    radial-gradient(circle at 93% 90%,
-      rgba(211,158,111,.14),transparent 42%),
-    repeating-linear-gradient(0deg,
-      transparent 0,
-      transparent 35px,
-      rgba(132,91,89,.033) 36px),
-    linear-gradient(140deg,
-      #fffaf1 0%,#faeee6 52%,#f0d9d6 100%);
-  border: 1px solid rgba(198,148,134,.8);
+    radial-gradient(circle at 9% 7%, rgba(230, 164, 166, .19), transparent 34%),
+    radial-gradient(circle at 93% 90%, rgba(211, 158, 111, .14), transparent 42%),
+    repeating-linear-gradient(0deg, transparent 0, transparent 35px, rgba(132, 91, 89, .033) 36px),
+    linear-gradient(140deg, #fffaf1 0%, #faeee6 52%, #f0d9d6 100%);
+  border: 1px solid rgba(198, 148, 134, .8);
   border-radius: 10px;
-  padding: clamp(34px,6vw,76px);
+  padding: clamp(34px, 6vw, 76px);
   box-shadow:
-    0 30px 85px rgba(0,0,0,.34),
-    0 0 0 8px rgba(255,239,229,.045),
-    inset 0 0 0 7px rgba(255,255,255,.30);
+    0 30px 85px rgba(0, 0, 0, .34),
+    0 0 0 8px rgba(255, 239, 229, .045),
+    inset 0 0 0 7px rgba(255, 255, 255, .30);
 }
-
 /* Folded paper corner */
 .final-letter-frame::before {
   content: '';
@@ -109,20 +95,18 @@
   z-index: 2;
   top: 0;
   right: 0;
-  width: clamp(45px,6.5vw,76px);
-  height: clamp(45px,6.5vw,76px);
+  width: clamp(45px, 6.5vw, 76px);
+  height: clamp(45px, 6.5vw, 76px);
   background: linear-gradient(225deg,
     #fdf9ef 0%,
     #ead3cb 45%,
-    rgba(150,97,98,.22) 49%,
+    rgba(150, 97, 98, .22) 49%,
     transparent 53%);
-  clip-path: polygon(0 0,100% 0,100% 100%);
-  filter: drop-shadow(-3px 3px 3px
-    rgba(77,43,48,.15));
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
+  filter: drop-shadow(-3px 3px 3px rgba(77, 43, 48, .15));
   pointer-events: none;
 }
-
-/* Heart watermark */
+/* Watermark in the bottom corner */
 .final-letter-frame::after {
   content: '\2661';
   position: absolute;
@@ -131,55 +115,45 @@
   bottom: -95px;
   color: #9e5e6b;
   font-family: Georgia, serif;
-  font-size: clamp(14rem,33vw,25rem);
+  font-size: clamp(14rem, 33vw, 25rem);
   line-height: 1;
   opacity: .065;
   pointer-events: none;
 }
-
-.final-letter-frame > * {
-  position: relative;
-  z-index: 1;
-}
-
+.final-letter-frame > * { position: relative; z-index: 1; }
 .final-letter-frame .eyebrow {
   color: #9b6d65;
   letter-spacing: .22em;
 }
-
 .final-letter-frame h1 {
   color: #4a313a;
-  font-size: clamp(2.65rem,5.1vw,4.9rem);
+  font-size: clamp(2.65rem, 5.1vw, 4.9rem);
   line-height: 1.12;
   letter-spacing: -.012em;
   text-wrap: balance;
   margin-top: 18px;
 }
-
 .final-letter-frame .letter-salutation {
   color: #a25d76;
-  font-size: clamp(2.5rem,4vw,3.6rem);
+  font-size: clamp(2.5rem, 4vw, 3.6rem);
   line-height: 1.2;
   margin: 36px 0 26px;
 }
-
 .final-letter-frame .letter-prose {
   color: #503942;
-  font-family: Georgia,'Times New Roman',serif;
-  font-size: clamp(1.06rem,1.35vw,1.17rem);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.06rem, 1.35vw, 1.17rem);
   line-height: 2;
   letter-spacing: .005em;
   max-width: 68ch;
 }
-
-/* Wax seal */
+/* A soft embossed wax seal at the end of the letter */
 .final-letter-frame .letter-seal {
   color: #945469;
-  font-size: clamp(2.25rem,4vw,3.25rem);
+  font-size: clamp(2.25rem, 4vw, 3.25rem);
   margin-top: 40px;
   line-height: 1.25;
 }
-
 .final-letter-frame .letter-seal::before {
   content: '\2665';
   display: grid;
@@ -188,169 +162,133 @@
   height: 65px;
   margin: 0 auto 20px;
   border-radius: 50%;
-  background: radial-gradient(circle at 30% 25%,
-    #cb8a96,#9d4e69 65%,#753b53);
-  border: 2px solid rgba(125,50,72,.36);
+  background: radial-gradient(circle at 30% 25%, #cb8a96, #9d4e69 65%, #753b53);
+  border: 2px solid rgba(125, 50, 72, .36);
   color: #ffe8e2;
-  font: 30px/1 Georgia,serif;
-  box-shadow:
-    0 7px 16px rgba(95,49,61,.22),
-    inset 0 2px 8px rgba(255,255,255,.22);
+  font: 30px/1 Georgia, serif;
+  box-shadow: 0 7px 16px rgba(95, 49, 61, .22), inset 0 2px 8px rgba(255,255,255,.22);
 }
 
-/* Better desktop timeline */
+/* 3. Desktop timeline: slightly larger, more balanced cards */
 @media (min-width: 721px) {
-  .timeline {
-    max-width: 1060px;
-  }
-  .time-row {
-    padding-right: 43px;
-    padding-bottom: 49px;
-  }
-  .time-row:nth-child(even) {
-    padding-left: 43px;
-    padding-bottom: 49px;
-  }
-  .time-card img {
-    height: 215px;
-  }
-  .time-text p {
-    font-size: .92rem;
-  }
+  .timeline { max-width: 1060px; }
+  .time-row { padding-right: 43px; padding-bottom: 49px; }
+  .time-row:nth-child(even) { padding-left: 43px; padding-bottom: 49px; }
+  .time-card img { height: 215px; }
+  .time-text p { font-size: .92rem; }
 }
-
-.time-card {
-  transition: transform .3s ease,
-              box-shadow .3s ease;
-}
-
+.time-card { transition: transform .3s ease, box-shadow .3s ease; }
 @media (hover: hover) {
-  .time-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 18px 45px rgba(0,0,0,.22);
-  }
+  .time-card:hover { transform: translateY(-5px); box-shadow: 0 18px 45px rgba(0,0,0,.22); }
 }
 
-/* Mobile love letter */
+/* 4. Keep the letter elegant and readable on phones */
 @media (max-width: 720px) {
-  .final-message-scene {
-    padding-left: 4.7%;
-    padding-right: 4.7%;
-  }
-  .final-letter-frame {
-    padding: 44px 25px 36px;
-    border-radius: 8px;
-  }
-  .final-letter-frame h1 {
-    font-size: clamp(2.15rem,8.4vw,3.5rem);
-  }
-  .final-letter-frame .letter-salutation {
-    margin: 29px 0 22px;
-  }
-  .final-letter-frame .letter-prose {
-    font-size: 1.035rem;
-    line-height: 1.9;
-  }
-  .final-letter-frame .letter-seal::before {
-    width: 56px;
-    height: 56px;
-  }
+  .final-message-scene { padding-left: 4.7%; padding-right: 4.7%; }
+  .final-letter-frame { padding: 44px 25px 36px; border-radius: 8px; }
+  .final-letter-frame h1 { font-size: clamp(2.15rem, 8.4vw, 3.5rem); }
+  .final-letter-frame .letter-salutation { margin: 29px 0 22px; }
+  .final-letter-frame .letter-prose { font-size: 1.035rem; line-height: 1.9; }
+  .final-letter-frame .letter-seal::before { width: 56px; height: 56px; }
 }
-
 @media (prefers-reduced-motion: reduce) {
-  .romantic-heartfall {
-    display: none;
-  }
-  .time-card {
-    transition: none;
-  }
+  .romantic-heartfall { display: none; }
+  .time-card { transition: none; }
 }
 
+/* AYYAPAN + ARTHI | PHOTO NO-CROP PATCH
+   Add at the VERY END of style.css (after all earlier polish code).
+   It intentionally replaces the arch photo mask with a premium soft rectangle
+   so captions/text at the top corners of uploaded photos are not clipped.
+*/
 
-
-
-/* AYYAPAN & ARTHI - PHOTO NO CROP FIX */
-
-/* TIMELINE PHOTOS */
-
+/* Timeline: natural image height, no crop */
 .time-card img {
-    width: 100% !important;
-    height: auto !important;
-    aspect-ratio: auto !important;
-    object-fit: contain !important;
-    object-position: center !important;
-    display: block;
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: auto !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  display: block;
 }
 
-/* COLLEGE PHOTO */
-
+/* College photo: show the complete uploaded image */
 .college-frame {
-    aspect-ratio: auto !important;
-    height: auto !important;
-    max-height: none !important;
-    padding: 12px !important;
-    border-radius: 26px !important;
-    background: var(--surface);
+  aspect-ratio: auto !important;
+  height: auto !important;
+  max-height: none !important;
+  padding: 12px !important;
+  border-radius: 26px !important;
+  background: var(--surface);
 }
-
 .college-frame img {
-    width: 100% !important;
-    height: auto !important;
-    max-height: none !important;
-    object-fit: contain !important;
-    object-position: center !important;
-    display: block;
-    border-radius: 6px !important;
+  width: 100% !important;
+  height: auto !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  display: block;
+  border-radius: 6px !important;
 }
 
-/* OPENING HERO PHOTO */
-
+/* Opening/Hero: full picture instead of the clipping arch crop */
 .hero-image-wrap {
-    aspect-ratio: auto !important;
-    height: auto !important;
-    padding: 12px !important;
-    border-radius: 28px !important;
-    background: var(--surface);
+  aspect-ratio: auto !important;
+  height: auto !important;
+  padding: 12px !important;
+  border-radius: 28px !important;
+  background: var(--surface);
 }
-
 .hero-image-wrap::after {
-    border-radius: 24px !important;
+  border-radius: 24px !important;
 }
-
 .hero-image-wrap img {
-    width: 100% !important;
-    height: auto !important;
-    object-fit: contain !important;
-    object-position: center !important;
-    display: block;
-    border-radius: 6px !important;
+  width: 100% !important;
+  height: auto !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  display: block;
+  border-radius: 6px !important;
 }
-
 .hero-picture-stamp {
-    right: 0 !important;
-    bottom: -34px !important;
+  right: 0 !important;
+  bottom: -34px !important;
 }
 
-/* BEAUTIFUL MEMORIES */
-
+/* 4 photo chapters: do not cut their edges */
 .memory-card .memory-cover {
-    width: 100% !important;
-    height: auto !important;
-    aspect-ratio: auto !important;
-    object-fit: contain !important;
-    object-position: center !important;
-    display: block;
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: auto !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  display: block;
 }
-
-/* MOBILE ADJUSTMENTS */
 
 @media (max-width: 720px) {
+  .hero-image-wrap { margin-bottom: 42px !important; }
+  .college-frame { transform: rotate(-1deg) !important; }
+}
 
-    .hero-image-wrap {
-        margin-bottom: 42px !important;
-    }
-
-    .college-frame {
-        transform: rotate(-1deg) !important;
-    }
+/* VERSION 2: Font Studio for LARGE opening names only.
+   Small header A-heart-A initials are deliberately not changed. */
+.hero-names {
+  font-family: var(--hero-name-font, 'Great Vibes', cursive);
+  font-style: var(--hero-name-style, normal);
+  font-size: var(--hero-name-desktop-size, 134px);
+  text-transform: var(--hero-name-case, none);
+  line-height: 0.99;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.hero-names em {
+  font-family: 'Great Vibes', cursive;
+  text-transform: none;
+  font-style: normal;
+}
+@media (max-width: 720px) {
+  .hero-names {
+    font-size: min(var(--hero-name-mobile-size, 74px), 21vw);
+    line-height: 1.05;
+  }
 }

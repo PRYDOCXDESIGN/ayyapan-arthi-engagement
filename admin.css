@@ -12,3 +12,10 @@
 .font-preview-names em { display:block;font:400 .38em/1.1 'Great Vibes',cursive;color:#df9eaf;margin:1px 0; }
 .font-preview-card.mobile-sample { max-width:310px; }
 @media(max-width:700px){.font-studio-previews{grid-template-columns:1fr;gap:12px}.font-preview-card{padding:11px 7px}.font-preview-card.mobile-sample{max-width:none}.font-preview-tag{font-size:.49rem;letter-spacing:.12em}.font-preview-names{overflow-wrap:anywhere}}
+
+/* CLIENT V2 · photo/upload/poetry controls */
+.v2-media-item{display:grid;grid-template-columns: minmax(160px,255px) 1fr;gap:22px;align-items:center;margin:19px 0;padding:19px;border:1px solid var(--border);background:var(--glass);border-radius:18px}
+.v2-image-preview{background:#1d1721;border-radius:12px;border:1px solid var(--border);overflow:hidden;max-width:260px;margin:12px 0}
+.v2-image-preview img{width:100%;max-height:270px;display:block;object-fit:contain}
+.v2-media-item .file-actions{min-width:0}
+@media(max-width:750px){.v2-media-item{grid-template-columns:1fr;padding:12px}.v2-image-preview{max-width:100%}}

@@ -35,6 +35,33 @@
     const el = $('#toast'); el.textContent = message; el.classList.add('show');
     clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove('show'), 3100);
   }
+  // Only the BIG opening names (Ayyapan & Arthi), not the small A-heart-A mark.
+  const HERO_FONTS = {
+    'great-vibes': "'Great Vibes', cursive",
+    'alex-brush': "'Alex Brush', cursive",
+    'pinyon-script': "'Pinyon Script', cursive",
+    'allura': "'Allura', cursive",
+    'parisienne': "'Parisienne', cursive",
+    'dancing-script': "'Dancing Script', cursive",
+    'playfair-display': "'Playfair Display', Georgia, serif",
+    'cormorant-garamond': "'Cormorant Garamond', Georgia, serif",
+    'italiana': "'Italiana', Georgia, serif",
+    'times-new-roman': "'Times New Roman', Times, serif",
+    'georgia': 'Georgia, serif'
+  };
+  function applyHeroTypography() {
+    const t = data.typography || {};
+    const root = document.documentElement.style;
+    const family = HERO_FONTS[t.heroFont] || HERO_FONTS['great-vibes'];
+    const casing = { original: 'none', title: 'capitalize', upper: 'uppercase', lower: 'lowercase' }[t.heroCase] || 'none';
+    const desktop = Math.max(60, Math.min(190, Number(t.heroDesktopSize) || 134));
+    const mobile = Math.max(38, Math.min(108, Number(t.heroMobileSize) || 74));
+    root.setProperty('--hero-name-font', family);
+    root.setProperty('--hero-name-case', casing);
+    root.setProperty('--hero-name-style', t.heroStyle === 'italic' ? 'italic' : 'normal');
+    root.setProperty('--hero-name-desktop-size', desktop + 'px');
+    root.setProperty('--hero-name-mobile-size', mobile + 'px');
+  }
   function theme() {
     for (const key of ['bg', 'surface', 'accent', 'gold', 'text']) {
       const value = data.theme?.[key];
@@ -44,13 +71,13 @@
     $('meta[name="theme-color"]')?.setAttribute('content', color);
   }
   function eventTimestamp() {
-    const date = /^\d{4}-\d{2}-\d{2}$/.test(data.couple?.date || '') ? data.couple.date : '2026-11-13';
+    const date = /^\d{4}-\d{2}-\d{2}$/.test(data.couple?.date || '') ? data.couple.date : '2026-11-11';
     const time = /^\d{2}:\d{2}$/.test(data.couple?.time || '') ? data.couple.time : '00:00';
     return new Date(`${date}T${time}:00+05:30`).getTime(); // ALWAYS Asia/Kolkata (IST)
   }
   function displayDate() {
     const ts = eventTimestamp();
-    if (Number.isNaN(ts)) return '13 November 2026';
+    if (Number.isNaN(ts)) return '11 November 2026';
     return new Intl.DateTimeFormat('en-IN', { timeZone: 'Asia/Kolkata', day:'numeric', month:'long', year:'numeric' }).format(new Date(ts));
   }
   function displayDateTime() {
@@ -316,7 +343,7 @@
         }
       }
     } catch (err) { console.warn('Could not fetch live website copy:',err); }
-    theme();previewMode=await verifyPreview();
+    theme();applyHeroTypography();previewMode=await verifyPreview();
     if(previewMode || isOpen()) startStory(); else renderGate();
   }
   $('#scenes').addEventListener('click', event => {

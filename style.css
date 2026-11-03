@@ -292,3 +292,132 @@
     line-height: 1.05;
   }
 }
+/* ==========================================================
+   CLIENT VERSION 2 — royal romantic story additions
+   Extends (never deletes) existing Font Studio, paper letter,
+   photo-no-crop, mobile styling and Supabase support.
+   ========================================================== */
+
+/* Two-picture story: first meet ABOVE the existing sitting photo */
+.hero-scene{align-items:start;gap:clamp(25px,5vw,82px)}
+.hero-scene .hero-content{padding-top:clamp(0px,3vw,55px);min-width:0}
+.hero-photo-story{position:relative;display:grid;gap:20px;width:min(100%,460px);justify-self:center;padding:4px 0 48px}
+.hero-photo-story figure{margin:0;position:relative;border:1px solid var(--border);border-radius:23px;background:linear-gradient(165deg,rgba(251,225,217,.085),rgba(255,255,255,.025));overflow:hidden;box-shadow:0 14px 50px rgba(0,0,0,.27)}
+.hero-photo-story img{display:block;width:100%;object-position:center;filter:saturate(.9);background:rgba(14,7,18,.3)}
+.hero-photo-story .meet-frame img{height:240px;max-height:240px}
+.hero-photo-story .sitting-frame img{height:345px;max-height:345px}
+.hero-photo-story .fit-contain img{object-fit:contain}
+.hero-photo-story .fit-cover img{object-fit:cover}
+.hero-photo-story figcaption{padding:17px 21px 20px;background:linear-gradient(120deg,rgba(53,34,53,.99),rgba(31,23,38,.97));display:grid;gap:6px;position:relative}
+.hero-photo-story figcaption small{font-size:.56rem;letter-spacing:.22em;color:var(--gold);font-weight:700}
+.hero-photo-story figcaption strong{font:400 1.8rem/1.1 'Italiana',Georgia,serif;color:var(--text)}
+.hero-photo-story figcaption span{font-size:.75rem;color:var(--muted);line-height:1.65}
+.hero-photo-story .sitting-frame{margin-left:18px}
+.sitting-stamp{position:absolute;right:9px;top:12px;border:1px solid var(--border);padding:10px 13px;background:rgba(35,21,42,.87);color:var(--gold);border-radius:14px;font:1.35rem 'Great Vibes',cursive;display:grid;text-align:center;box-shadow:0 7px 20px rgba(0,0,0,.25)}
+.sitting-stamp small{font:.56rem 'DM Sans',sans-serif;letter-spacing:.06em;line-height:1.3;text-transform:uppercase}
+
+/* Full screen accessible knot-and-heart chapter transition */
+.ribbon-transition{position:fixed;inset:0;z-index:90;display:grid;place-items:center;overflow:auto;padding:22px 18px;background:radial-gradient(circle at 50% 38%,rgba(95,48,83,.68),transparent 60%),rgba(17,10,23,.97);backdrop-filter:blur(21px);color:var(--text);isolation:isolate}
+.ribbon-transition::before{content:'';position:absolute;inset:5%;border:1px solid rgba(243,209,177,.18);border-radius:22px;pointer-events:none;z-index:-1}
+.ribbon-stars{position:absolute;top:8%;left:0;right:0;text-align:center;font-size:1.7rem;letter-spacing:1.2rem;color:var(--gold);opacity:.7;animation:twinkle 5s ease-in-out infinite alternate}
+.ribbon-content{display:flex;flex-direction:column;align-items:center;text-align:center;width:min(100%,650px);gap:9px;padding:45px 0 25px}
+.ribbon-content h2{font:400 clamp(2rem,5vw,3.6rem)/1.17 'Italiana',Georgia,serif;margin:10px auto 0;max-width:560px}
+.ribbon-content>p{max-width:430px;margin:10px auto 14px;color:var(--muted);line-height:1.8;font-size:.91rem}
+.ribbon-heart-trigger{position:relative;display:block;border:0;background:none;color:var(--accent);height:290px;width:min(330px,75vw);padding:0;isolation:isolate;outline-offset:8px;transition:filter .3s;cursor:pointer}
+.ribbon-heart-trigger:focus-visible{outline:2px solid var(--gold);border-radius:20px}
+.ribbon-heart-trigger:hover{filter:drop-shadow(0 0 17px rgba(221,129,154,.36))}
+.ribbon-heart-trigger .heart-door{position:absolute;width:100%;height:100%;inset:0;display:grid;place-items:center;font:normal 260px/1 Georgia,'Times New Roman',serif;color:#d889a1;text-shadow:0 0 17px rgba(222,136,160,.6),0 15px 45px rgba(0,0,0,.22);z-index:3;transform-origin:center;transition:transform .95s cubic-bezier(.15,.75,.23,1.15),opacity .85s;user-select:none}
+.ribbon-heart-trigger .heart-door.left{clip-path:inset(0 49.6% 0 0)}
+.ribbon-heart-trigger .heart-door.right{clip-path:inset(0 0 0 50%)}
+.ribbon-glow{position:absolute;left:50%;top:46%;width:120px;height:120px;border-radius:50%;transform:translate(-50%,-50%) scale(.5);background:radial-gradient(circle,rgba(255,230,178,.93),rgba(227,148,175,.38) 40%,transparent 72%);opacity:0;z-index:1;transition:transform 1.3s,opacity .8s}
+.ribbon-band{position:absolute;z-index:5;left:12%;right:12%;top:46%;height:16px;border-radius:8px;background:linear-gradient(90deg,#c69b64,#ffedbc,#b37d53,#f0d5a7);box-shadow:0 4px 12px rgba(69,30,40,.25);transform:rotate(-2deg);transition:transform .6s,opacity .5s}
+.ribbon-tail{position:absolute;top:46%;height:74px;width:14px;z-index:6;background:linear-gradient(90deg,#af7d53,#f4ddb2,#bc8553);border-radius:0 0 8px 8px;transition:transform .75s,opacity .5s}
+.tail-left{left:47%;transform:rotate(14deg)}.tail-right{left:52%;transform:rotate(-21deg)}
+.ribbon-bow{position:absolute;z-index:7;top:37%;height:62px;width:85px;border:13px solid #f1cf91;background:rgba(255,240,212,.16);box-shadow:inset 0 0 9px rgba(82,41,51,.2),0 3px 11px rgba(0,0,0,.21);transition:transform .72s cubic-bezier(.25,.8,.2,1.1),opacity .5s}
+.bow-left{left:calc(50% - 85px);border-radius:85% 15% 70% 25%;transform:rotate(25deg)}
+.bow-right{left:50%;border-radius:15% 85% 25% 70%;transform:rotate(-25deg)}
+.ribbon-knot{position:absolute;z-index:8;top:calc(42% + 5px);left:50%;width:27px;height:28px;transform:translateX(-50%) rotate(45deg);border-radius:7px;background:linear-gradient(135deg,#fff0c1,#c99663);box-shadow:0 3px 12px rgba(0,0,0,.22);transition:transform .5s,opacity .4s}
+.heart-peek{position:absolute;z-index:2;left:50%;top:46%;width:140px;height:140px;transform:translate(-50%,-50%) scale(.5);border-radius:50%;overflow:hidden;opacity:0;border:2px solid rgba(238,212,168,.55);box-shadow:0 0 50px rgba(250,200,184,.4);transition:transform .9s .35s,opacity .65s .3s}
+.heart-peek img{width:100%;height:100%;object-fit:cover}
+.ribbon-transition.is-opening .ribbon-knot{transform:translate(-50%,70px) rotate(180deg) scale(.3);opacity:0}
+.ribbon-transition.is-opening .bow-left{transform:translate(-80px,-75px) rotate(-80deg);opacity:0}
+.ribbon-transition.is-opening .bow-right{transform:translate(80px,-70px) rotate(85deg);opacity:0}
+.ribbon-transition.is-opening .ribbon-band{transform:translateY(95px) rotate(-13deg) scaleX(.35);opacity:0}
+.ribbon-transition.is-opening .tail-left{transform:translate(-80px,100px) rotate(70deg);opacity:0}
+.ribbon-transition.is-opening .tail-right{transform:translate(80px,100px) rotate(-70deg);opacity:0}
+.ribbon-transition.is-opening .heart-door.left{transform:translateX(-68px) rotate(-15deg) scale(.9);opacity:0}
+.ribbon-transition.is-opening .heart-door.right{transform:translateX(68px) rotate(15deg) scale(.9);opacity:0}
+.ribbon-transition.is-opening .ribbon-glow{transform:translate(-50%,-50%) scale(3.6);opacity:1}
+.ribbon-transition.is-opening .heart-peek{transform:translate(-50%,-50%) scale(1.65);opacity:1}
+.transition-skip{border:0;background:transparent;color:var(--gold);font-size:.75rem;letter-spacing:.08em;text-decoration:underline;text-underline-offset:4px;padding:12px 16px}
+.transition-skip:focus-visible{outline:2px solid var(--gold)}
+
+/* Poetry: intimate handwritten letter chapter */
+.poetry-grid{max-width:1200px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin:36px auto}
+.poem-card{min-height:360px;position:relative;padding:38px 33px 40px;background:linear-gradient(142deg,#fffaee,#f3e1db);color:#563b45;border:1px solid rgba(197,152,121,.68);border-radius:4px 18px 6px 20px;box-shadow:0 20px 65px rgba(0,0,0,.23),inset 0 0 0 6px rgba(255,255,255,.22);transform:rotate(-1deg)}
+.poem-card:nth-child(2){transform:rotate(1.4deg) translateY(20px)}.poem-card:nth-child(3){transform:rotate(-.6deg)}
+.poem-card::before{content:'♡';font-size:9rem;color:#bb8499;opacity:.08;position:absolute;right:10px;bottom:0;line-height:1;pointer-events:none}
+.poem-number{font-size:.7rem;letter-spacing:.15em;color:#9c6076;font-weight:700}
+.poem-card h3{font:400 2rem/1.22 'Italiana',Georgia,serif;margin:25px 0;color:#513440}
+.poem-card p{font:1.06rem/1.85 Georgia,serif;white-space:pre-line;position:relative;z-index:1}
+.poem-flourish{position:absolute;left:32px;bottom:24px;color:#b88193;font-size:1.4rem}
+
+/* Proposal: cinematic soft movement from the uploaded image */
+.proposal-stage{position:relative;max-width:880px;margin:35px auto 10px;min-height:430px;display:grid;place-items:center;padding:15px 0 30px}
+.proposal-photo{position:relative;width:min(90%,600px);padding:13px;border:1px solid var(--border);border-radius:200px 200px 23px 23px;background:linear-gradient(135deg,rgba(230,183,190,.16),rgba(255,255,255,.025));box-shadow:0 26px 94px rgba(0,0,0,.3);overflow:hidden;transform:scale(.96);transition:transform 1.5s}
+.proposal-photo img{display:block;width:100%;height:420px;object-position:center;border-radius:184px 184px 13px 13px;filter:saturate(.92);animation:proposalSway 18s ease-in-out infinite alternate}
+.proposal-photo.fit-contain img{object-fit:contain;background:rgba(14,8,19,.23)}.proposal-photo.fit-cover img{object-fit:cover}
+@keyframes proposalSway{from{transform:scale(1)}to{transform:scale(1.045)}}
+.proposal-photo-glow{position:absolute;inset:-40%;background:radial-gradient(circle at 60% 50%,rgba(255,234,187,.19),transparent 45%);pointer-events:none;opacity:.5;animation:twinkle 6s ease-in-out infinite alternate}
+.proposal-ring{position:absolute;right:10%;bottom:70px;color:var(--gold);font-size:4rem;transform:rotate(-15deg);text-shadow:0 0 24px rgba(244,218,172,.55);animation:heartbeat 3s ease-in-out infinite}
+.proposal-stage.revealed .proposal-photo{transform:scale(1)}
+.proposal-copy{position:relative;max-width:600px;margin:19px auto 0;padding:22px 30px;text-align:center;border-radius:17px;border:1px solid var(--border);background:rgba(42,28,48,.88);animation:sceneIn .85s both}
+.proposal-copy p{font:400 clamp(1.45rem,2.9vw,2.2rem)/1.6 'Italiana',serif;color:var(--gold);margin:10px 0 0}
+
+/* End scene gift illustration: rose and two chocolate boxes, or teddy variant */
+.gift-finale{margin:55px auto 12px;padding:40px 23px 48px;border:1px solid var(--border);border-radius:26px;background:radial-gradient(circle at 50% 100%,rgba(221,143,169,.14),transparent 65%),rgba(255,255,255,.024);text-align:center;max-width:900px}
+.gift-finale h2{font-size:clamp(2rem,5vw,4rem);margin:16px 0;color:var(--gold)}
+.gift-finale>p{color:var(--muted);line-height:1.9;max-width:650px;margin:0 auto 20px}
+.gift-tray{height:240px;display:flex;align-items:center;justify-content:center;gap:28px;isolation:isolate;position:relative}
+.gift-tray::after{content:'';position:absolute;left:14%;right:14%;bottom:20px;height:15px;border-radius:50%;background:rgba(0,0,0,.2);filter:blur(13px);z-index:-1}
+.chocolate{width:92px;height:94px;flex:none;border-radius:15px;background:linear-gradient(135deg,#44201f,#8a4e40 30%,#3f1f22 74%,#a3624c);border:9px ridge #ba8b66;box-shadow:inset 0 0 11px rgba(30,12,18,.9),0 13px 30px rgba(0,0,0,.29);display:grid;place-items:center;transform:rotate(-12deg);font-size:2.6rem;color:#e8c7a4;text-shadow:0 2px 6px rgba(0,0,0,.3)}
+.chocolate:last-child{transform:rotate(10deg)}
+.gift-rose{display:flex;flex-direction:column;align-items:center;position:relative;width:125px;height:235px;filter:drop-shadow(0 10px 9px rgba(0,0,0,.26));transform:rotate(8deg)}
+.rose-flower{font:180px/1 Georgia,serif;color:#bd4c6f;z-index:2;text-shadow:-8px 6px #84334e,6px 2px #ef9cae,0 0 33px rgba(211,78,103,.38)}
+.rose-stem{display:block;position:absolute;top:100px;height:128px;width:7px;background:linear-gradient(90deg,#315e48,#8aa16f,#315e48);transform:rotate(-11deg)}
+.gift-teddy{font-size:100px;filter:drop-shadow(0 9px 12px rgba(0,0,0,.25));transform:rotate(-11deg)}
+.gift-names{font-size:clamp(2.3rem,4vw,4rem);display:block;color:var(--gold);margin-top:13px}
+
+@media(max-width:980px){.poetry-grid{grid-template-columns:1fr 1fr}.poem-card:nth-child(3){grid-column:1/-1;max-width:510px;width:100%;justify-self:center}}
+@media(max-width:720px){
+  .hero-scene{gap:12px}
+  .hero-photo-story{order:4;width:100%;max-width:440px;gap:16px;margin:10px auto 9px;padding-bottom:22px}
+  .hero-photo-story .meet-frame img{height:240px;max-height:240px}
+  .hero-photo-story .sitting-frame{margin-left:0}
+  .hero-photo-story .sitting-frame img{height:330px;max-height:330px}
+  .hero-photo-story figcaption{padding:17px 19px}
+  .hero-photo-story figcaption strong{font-size:1.58rem}
+  .poetry-grid{grid-template-columns:1fr;gap:19px;max-width:460px}
+  .poem-card,.poem-card:nth-child(2),.poem-card:nth-child(3){grid-column:auto;min-height:300px;transform:none;width:100%;max-width:none}
+  .ribbon-content h2{font-size:2.4rem}
+  .ribbon-heart-trigger{width:300px;max-width:77vw;height:265px}
+  .ribbon-heart-trigger .heart-door{font-size:225px}
+  .proposal-stage{min-height:340px}
+  .proposal-photo{width:96%;padding:8px}
+  .proposal-photo img{height:320px}
+  .proposal-ring{right:4%;bottom:60px;font-size:3rem}
+  .gift-tray{gap:10px;height:200px}
+  .chocolate{width:70px;height:72px;font-size:2rem;border-width:6px}
+  .gift-rose{height:196px;width:100px}
+  .rose-flower{font-size:136px}
+  .rose-stem{height:100px;top:80px}
+  .gift-teddy{font-size:70px}
+}
+@media(max-width:410px){.ribbon-heart-trigger{width:270px;height:240px}.ribbon-heart-trigger .heart-door{font-size:205px}.ribbon-content h2{font-size:2.05rem}.hero-photo-story .sitting-frame img{height:285px}}
+@media(prefers-reduced-motion:reduce){.ribbon-transition *,.proposal-photo img,.proposal-photo-glow{animation:none!important;transition:none!important}}
+
+/* The next navigation control is itself a miniature ribbon-heart. */
+.nav-next-ribbon{display:inline-flex;align-items:center;gap:10px;color:var(--gold)}
+.mini-ribbon-heart{position:relative;display:inline-grid;place-items:center;font:30px Georgia,serif;color:#de92a9;line-height:1;text-shadow:0 0 12px rgba(227,145,172,.25)}
+.mini-ribbon-heart i{position:absolute;left:45%;top:50%;transform:translate(-40%,-50%) rotate(25deg);font:12px Georgia,serif;color:#f2d39d;font-style:normal;text-shadow:0 1px 2px #663c41}
+@media(max-width:440px){.nav-next-ribbon{gap:6px}.nav-next-ribbon>span:last-child{font-size:.69rem}}

@@ -2,3 +2,13 @@
 @media(max-width:1120px){.admin-topbar{flex-wrap:wrap}.admin-layout{grid-template-columns:220px minmax(0,1fr)}.admin-top-actions{width:100%;justify-content:flex-end}.admin-content{padding:30px 25px 100px}.theme-grid{grid-template-columns:repeat(2,1fr)}.color-grid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:700px){.admin-layout{display:block}.admin-sidebar{position:relative;top:0;max-height:none;border-right:0;border-bottom:1px solid var(--border);padding:13px 12px}.admin-nav{display:flex;overflow-x:auto;gap:5px;padding-bottom:8px}.nav-tab{white-space:nowrap;width:auto;padding:10px 12px}.nav-tab .tab-icon{width:auto;margin-right:4px}.admin-note{display:none}.admin-content{padding:25px 13px 90px}.admin-topbar{padding:12px}.admin-logo{width:45px;height:45px;font-size:.9rem}.admin-top-left h1{font-size:1.4rem}.admin-top-actions{gap:5px}.admin-top-actions .button{font-size:.61rem;padding:8px 10px;min-height:37px}.save-status{margin:0 auto 0 0;font-size:.62rem;white-space:normal}.small-icon-button{padding:6px}.form-grid,.form-grid.three{grid-template-columns:1fr}.color-grid{grid-template-columns:repeat(2,1fr)}.theme-grid{gap:8px}.publish-strip{display:block}.publish-strip .button{margin-top:16px}.editor-section{padding:17px}.editor-row{align-items:flex-start}.mini-buttons{justify-content:flex-end}.admin-auth-card h1{font-size:2.2rem}}
 .admin-empty{grid-column:1/-1;max-width:650px;margin:0 auto}
+
+/* Live Typography Studio - changes not published until Save */
+.font-studio-previews { display:grid;grid-template-columns: minmax(0,1.65fr) minmax(0,1fr);gap:15px;margin:12px 0 26px; }
+.font-preview-card { border:1px solid rgba(238,212,168,.29);padding:14px 12px 17px;border-radius:14px;min-width:0;overflow:hidden;text-align:center;background:radial-gradient(circle at 60% 13%,rgba(223,158,175,.14),transparent 60%),#201625; }
+.font-preview-tag { font-size:.58rem;letter-spacing:.2em;color:#eed4a8;margin:8px 0 19px;font-weight:700; }
+.font-preview-names { color:#eed4a8;line-height:1.01;font-weight:400;max-width:100%;overflow-wrap:anywhere;transition:font-size .18s ease; }
+.font-preview-names span { display:block; }
+.font-preview-names em { display:block;font:400 .38em/1.1 'Great Vibes',cursive;color:#df9eaf;margin:1px 0; }
+.font-preview-card.mobile-sample { max-width:310px; }
+@media(max-width:700px){.font-studio-previews{grid-template-columns:1fr;gap:12px}.font-preview-card{padding:11px 7px}.font-preview-card.mobile-sample{max-width:none}.font-preview-tag{font-size:.49rem;letter-spacing:.12em}.font-preview-names{overflow-wrap:anywhere}}

@@ -4,7 +4,7 @@ window.LOVE_DEFAULTS = {
   couple: {
     nameOne: 'Ayyapan',
     nameTwo: 'Arthi',
-    date: '2026-11-13',
+    date: '2026-11-11',
     time: '00:00',
     city: '',
     eyebrow: 'FROM COLLEGE DAYS TO FOREVER',
@@ -12,6 +12,13 @@ window.LOVE_DEFAULTS = {
   },
   flags: { forceOpen: false, musicEnabled: true },
   layout: { heroAlign: 'left', heroFocus: 'center' },
+  typography: {
+    heroFont: 'great-vibes',
+    heroCase: 'original',
+    heroStyle: 'normal',
+    heroDesktopSize: 134,
+    heroMobileSize: 74
+  },
   copy: {
     waitingTitle: 'Some moments are worth waiting for.',
     waitingText: 'A love that began in college is about to turn into a beautiful forever. Our next chapter opens at midnight.',
@@ -37,7 +44,7 @@ window.LOVE_DEFAULTS = {
     finalLead: 'After all these years... After every smile, every fight, every memory... If I could choose again, in every lifetime, I would still choose you.',
     finalQuestion: 'Will you keep writing every tomorrow with me?',
     finalLetterTitle: 'And suddenly, forever feels close enough to touch.',
-    finalLetter: 'Dear my favourite person,\n\nFrom the days when we were simply two students with endless things to say, to this beautiful moment before our engagement, you have been my safest place and my greatest adventure.\n\nWe have grown. We have laughed. We have been through the little storms that make love stronger. And yet, the most beautiful part is how I still look for you in every happy moment.\n\nOn 13 November 2026, we are not beginning our story. We are promising to keep choosing the story we began long ago.\n\nIf life lets me choose a thousand times, my answer will always be the same. You. In this lifetime. In every lifetime.\n\nForever, with all my love. ❤️',
+    finalLetter: 'Dear my favourite person,\n\nFrom the days when we were simply two students with endless things to say, to this beautiful moment before our engagement, you have been my safest place and my greatest adventure.\n\nWe have grown. We have laughed. We have been through the little storms that make love stronger. And yet, the most beautiful part is how I still look for you in every happy moment.\n\nOn 11 November 2026, we are not beginning our story. We are promising to keep choosing the story we began long ago.\n\nIf life lets me choose a thousand times, my answer will always be the same. You. In this lifetime. In every lifetime.\n\nForever, with all my love. ❤️',
     endingLine: 'Our love story does not end here. It becomes our forever.',
     countdownFooter: 'At midnight, a little surprise will unlock for you. ♡',
     heartTagline: 'Our story was always meant to find its way home.',
@@ -88,7 +95,7 @@ window.LOVE_DEFAULTS = {
     { id: 'time-1', when: 'THE FIRST CHAPTER', title: 'Two strangers in college', description: 'A passing moment, a first hello — and a story neither of us could have imagined.', image: 'assets/flower-moment.jpg' },
     { id: 'time-2', when: 'THE LITTLE MOMENTS', title: 'Conversations became our favourite place', description: 'We shared stories, secrets, laughter and dreams — slowly, we became each other’s person.', image: 'assets/under-the-tree.jpg' },
     { id: 'time-3', when: 'THE YEARS TOGETHER', title: 'Growing through every season', description: 'We learned that love is not only about perfect days. It is about finding one another in all the others.', image: 'assets/little-care.jpg' },
-    { id: 'time-4', when: '13 NOVEMBER 2026', title: 'From our story to our promise', description: 'Not the end of a love story. The beginning of the forever we have been building all along.', image: 'assets/holding-hands.jpg' }
+    { id: 'time-4', when: '11 NOVEMBER 2026', title: 'From our story to our promise', description: 'Not the end of a love story. The beginning of the forever we have been building all along.', image: 'assets/holding-hands.jpg' }
   ],
   theme: {
     preset: 'royal-rose',

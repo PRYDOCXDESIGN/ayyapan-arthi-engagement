@@ -44,10 +44,72 @@
   const section=(title,body,help='')=> `<div class="editor-section"><h3>${esc(title)}</h3>${help?`<p class="section-sub">${esc(help)}</p>`:''}${body}</div>`;
   const header=(title,desc)=> `<div class="editor-header"><span class="eyebrow">MAKE IT YOUR OWN · LIVE CONTENT</span><h2>${esc(title)}</h2><p>${esc(desc)}</p></div>`;
   const publishBar=()=>`<div class="publish-strip"><p>♧ When you are happy with your changes, click Publish. Visitors will see the new details instantly without a GitHub update.</p><button class="button button-primary" type="button" data-action="save">Publish Changes ♡</button></div>`;
+  // Font presets for the BIG names on the first full page, not the header's small initials.
+  const HERO_FONTS = {
+    'great-vibes': "'Great Vibes', cursive",
+    'alex-brush': "'Alex Brush', cursive",
+    'pinyon-script': "'Pinyon Script', cursive",
+    'allura': "'Allura', cursive",
+    'parisienne': "'Parisienne', cursive",
+    'dancing-script': "'Dancing Script', cursive",
+    'playfair-display': "'Playfair Display', Georgia, serif",
+    'cormorant-garamond': "'Cormorant Garamond', Georgia, serif",
+    'italiana': "'Italiana', Georgia, serif",
+    'times-new-roman': "'Times New Roman', Times, serif",
+    'georgia': 'Georgia, serif'
+  };
+  const HERO_FONT_CHOICES = [
+    ['great-vibes','Great Vibes - Romantic Script'],
+    ['alex-brush','Alex Brush - Elegant Calligraphy'],
+    ['pinyon-script','Pinyon Script - Royal Wedding'],
+    ['allura','Allura - Soft Handwriting'],
+    ['parisienne','Parisienne - Paris Romance'],
+    ['dancing-script','Dancing Script - Playful'],
+    ['playfair-display','Playfair Display - Classic Luxury'],
+    ['cormorant-garamond','Cormorant Garamond - Editorial'],
+    ['italiana','Italiana - Thin & Elegant'],
+    ['times-new-roman','Times New Roman - Traditional'],
+    ['georgia','Georgia - Classic Serif']
+  ];
+  function fontNumber(label, path, min, max) {
+    return `<label>${esc(label)}<input type="number" min="${min}" max="${max}" step="1" inputmode="numeric" data-path="${esc(path)}" value="${esc(getPath(path))}"></label>`;
+  }
+  function renderFontStudio() {
+    return section('Opening Names - Font Studio', `
+      <p class="section-sub">Edit the LARGE Ayyapan & Arthi lettering on the first full website screen. This does NOT change the small A ♡ A header logo.</p>
+      <div class="font-studio-previews" aria-label="Live font previews">
+        <div class="font-preview-card"><div class="font-preview-tag">DESKTOP STYLE PREVIEW</div><div class="font-preview-names" data-name-preview="desktop"><span data-preview-name="one"></span><em>&amp;</em><span data-preview-name="two"></span></div></div>
+        <div class="font-preview-card mobile-sample"><div class="font-preview-tag">MOBILE STYLE PREVIEW</div><div class="font-preview-names" data-name-preview="mobile"><span data-preview-name="one"></span><em>&amp;</em><span data-preview-name="two"></span></div></div>
+      </div>
+      <div class="form-grid">${selectField('Font Style - Choose from 11 designs','typography.heroFont',HERO_FONT_CHOICES)}${selectField('Capital / Letter Case','typography.heroCase', [['original','As typed (Ayyapan / Arthi)'],['title','Title Case (Ayyapan / Arthi)'],['upper','ALL CAPITAL LETTERS'],['lower','all lowercase']])}</div>
+      <div class="form-grid">${selectField('Normal or Italic','typography.heroStyle',[['normal','Normal'],['italic','Italic']])}${fontNumber('Desktop Font Size (60-190 px)','typography.heroDesktopSize',60,190)}</div>
+      <div class="form-grid">${fontNumber('Mobile Font Size (38-108 px)','typography.heroMobileSize',38,108)}</div>
+      <p class="field-note">The samples above update instantly before publishing. Actual display adjusts to screen width so the names are not cut off. Click Preview after publishing for an exact full-page view.</p>
+      <button class="mini-btn" type="button" data-action="reset-name-font">Restore original name font</button>
+    `);
+  }
+  function updateFontPreview() {
+    const t = state.typography || {};
+    const family = HERO_FONTS[t.heroFont] || HERO_FONTS['great-vibes'];
+    const casing = {original:'none', title:'capitalize', upper:'uppercase', lower:'lowercase'}[t.heroCase] || 'none';
+    const desktop = Math.max(60,Math.min(190,Number(t.heroDesktopSize) || 134));
+    const mobile = Math.max(38,Math.min(108,Number(t.heroMobileSize) || 74));
+    $$('.font-preview-names', editor).forEach(sample => {
+      const narrowScreen=window.matchMedia('(max-width:700px)').matches;
+      const size = sample.dataset.namePreview === 'mobile' ? Math.min(66, mobile * 0.72) : (narrowScreen ? Math.min(61, desktop * 0.43) : Math.min(81, desktop * 0.56));
+      sample.style.fontFamily=family;
+      sample.style.fontSize=size+'px';
+      sample.style.textTransform=casing;
+      sample.style.fontStyle=t.heroStyle === 'italic' ? 'italic' : 'normal';
+      sample.querySelector('[data-preview-name="one"]').textContent=state.couple.nameOne || 'Ayyapan';
+      sample.querySelector('[data-preview-name="two"]').textContent=state.couple.nameTwo || 'Arthi';
+    });
+  }
   function renderEvent(){
     return header('Your names. Your date. Your forever.','Control the event date, the countdown, the couple names and the words visitors see before your love story opens.')+
       section('The happy couple', `<div class="form-grid">${field('First name','couple.nameOne')}${field('Second name','couple.nameTwo')}</div><div class="form-grid">${field('Story eyebrow / short caption','couple.eyebrow')}${field('Event tag','couple.eventLabel')}</div>${field('City / venue (optional)','couple.city')}`)+
-      section('Unlock exactly at midnight (IST)', `<div class="form-grid">${field('Engagement date','couple.date','date')}${field('Opening time — Indian Standard Time','couple.time','time')}</div><p class="admin-hint">Set <b>13 November 2026</b> and <b>00:00</b>. Visitors see Days / Hours / Minutes / Seconds before this moment. On or after the date, the whole story stays open — it will not lock again at the next midnight.</p><label class="checkline"><input type="checkbox" data-path="flags.forceOpen" ${state.flags.forceOpen?'checked':''}> Open website immediately, ignoring the countdown (manual override)</label><p class="field-note">Leave this unchecked before 13 November. Use only if you want to publish early.</p>`)+
+      renderFontStudio()+
+      section('Unlock exactly at midnight (IST)', `<div class="form-grid">${field('Engagement date','couple.date','date')}${field('Opening time — Indian Standard Time','couple.time','time')}</div><p class="admin-hint">Set <b>11 November 2026</b> and <b>00:00</b>. Visitors see Days / Hours / Minutes / Seconds before this moment. On or after the date, the whole story stays open — it will not lock again at the next midnight.</p><label class="checkline"><input type="checkbox" data-path="flags.forceOpen" ${state.flags.forceOpen?'checked':''}> Open website immediately, ignoring the countdown (manual override)</label><p class="field-note">Leave this unchecked before 11 November. Use only if you want to publish early.</p>`)+
       section('What visitors see before the unlock',area('Countdown headline','copy.waitingTitle',2)+area('Short emotional countdown message','copy.waitingText',4))+
       section('The first screen after the unlock',area('Opening quote','copy.heroQuote',3)+area('Hero tagline','copy.heroKicker',2)+area('Short line under the first button','copy.heroNote',2)+`<div class="form-grid">${selectField('Name / story alignment','layout.heroAlign', [['left','Left (desktop)'],['center','Center (desktop)']])}${selectField('Hero photo crop / focus','layout.heroFocus', [['top','Top / upper part'],['center','Center'],['bottom','Bottom / lower part']])}</div>`) + publishBar();
   }
@@ -98,6 +160,7 @@
   function render(){
     $('#admin-nav').innerHTML=tabs.map(t=>`<button type="button" class="nav-tab ${t.id===tab?'active':''}" data-tab="${t.id}"><span class="tab-icon">${t.icon}</span>${esc(t.name)}</button>`).join('');
     editor.innerHTML=({event:renderEvent,words:renderWords,memories:renderMemories,timeline:renderTimeline,theme:renderTheme,files:renderFiles}[tab])();
+    if(tab==='event')updateFontPreview();
     if(tab==='theme')for(const key of ['bg','surface','accent','gold','text']) {
       // Visually update only this admin preview's theme, never mutate the published site until Save.
       document.documentElement.style.setProperty('--'+key,state.theme[key]);
@@ -161,6 +224,8 @@
     if(!state.couple.nameOne.trim() || !state.couple.nameTwo.trim())return 'Please enter both names.';
     if(!/^\d{4}-\d{2}-\d{2}$/.test(state.couple.date))return 'Please select a valid date.';
     if(!/^\d{2}:\d{2}$/.test(state.couple.time))return 'Please select a valid opening time.';
+    if(!(Number(state.typography?.heroDesktopSize)>=60 && Number(state.typography?.heroDesktopSize)<=190))return 'Desktop name font size must be 60-190 px.';
+    if(!(Number(state.typography?.heroMobileSize)>=38 && Number(state.typography?.heroMobileSize)<=108))return 'Mobile name font size must be 38-108 px.';
     if(!state.collegeOptions.some(choice=>choice.correct))return 'Please mark one quiz answer as correct.';
     if(!state.memories?.length)return 'Please keep at least one memory chapter.';
     return '';
@@ -215,6 +280,7 @@
     const value=event.target.type==='checkbox'?event.target.checked:event.target.value;
     setPath(path,value);
     if(path.startsWith('theme.'))document.documentElement.style.setProperty('--'+path.split('.')[1],value);
+    if(tab==='event' && (path.startsWith('typography.') || path==='couple.nameOne' || path==='couple.nameTwo'))updateFontPreview();
   });
   editor.addEventListener('change',event=>{
     if(event.target.dataset.upload)handleUpload(event.target);
@@ -226,6 +292,7 @@
     const b=event.target.closest('[data-action]');if(!b || b.disabled)return;
     const action=b.dataset.action,index=Number(b.dataset.index),direction=Number(b.dataset.dir);
     if(action==='save')return publish();
+    if(action==='reset-name-font'){state.typography=clone(window.LOVE_DEFAULTS.typography);markDirty();render();showToast('Original romantic font restored in editor. Publish to apply.');return;}
     if(action==='add-choice'){state.collegeOptions.push({id:'choice-'+Date.now(),label:'Another lovely possibility',correct:false});markDirty();render();}
     if(action==='delete-choice'){
       const wasCorrect=state.collegeOptions[index].correct;

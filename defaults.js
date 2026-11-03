@@ -1,6 +1,6 @@
 /* All starting words, photos and colors. After Supabase setup, use admin.html to edit without coding. */
 window.LOVE_DEFAULTS = {
-  version: 1,
+  version: 2,
   couple: {
     nameOne: 'Ayyapan',
     nameTwo: 'Arthi',
@@ -11,7 +11,9 @@ window.LOVE_DEFAULTS = {
     eventLabel: 'OUR ENGAGEMENT'
   },
   flags: { forceOpen: false, musicEnabled: true },
-  layout: { heroAlign: 'left', heroFocus: 'center' },
+  features: { ribbonTransitions: true, poetry: true, proposal: true, fallingHearts: true },
+  gifts: { style: 'rose-chocolates' },
+  layout: { heroAlign: 'left', heroFocus: 'center', heroFit: 'contain', meetFit: 'contain', proposalFit: 'contain' },
   typography: {
     heroFont: 'great-vibes',
     heroCase: 'original',
@@ -25,6 +27,18 @@ window.LOVE_DEFAULTS = {
     heroQuote: 'Some love stories are written in the stars... Ours was written in our college days.',
     heroKicker: 'One beautiful beginning. A lifetime of tomorrows.',
     heroNote: 'We never knew that one ordinary day would become the beginning of everything.',
+    meetTitle: 'The first hello',
+    meetCaption: 'One ordinary college day. One unforgettable beginning.',
+    sittingTitle: 'The conversations that became home',
+    sittingCaption: 'We kept talking, and somehow the rest of the world grew quiet.',
+    ribbonPrompt: 'A new memory is tied inside this little heart. Tap to untie the ribbon.',
+    poetryTitle: 'Love, Written in Little Moments',
+    poetryIntro: 'Some things we never said out loud became the loveliest chapters of our story.',
+    proposalTitle: 'The Moment We Chose Forever',
+    proposalIntro: 'Every road from the very first hello led to this promise.',
+    proposalSecret: 'I do not need a perfect story. I only need every next chapter with you.',
+    giftTitle: 'A little sweetness for our forever',
+    giftMessage: 'One rose for every gentle beginning, two chocolates for the sweet little moments, and a lifetime of choosing you.',
     heartsTitle: 'Two hearts. One beautiful destiny.',
     heartsQuote: 'Two different hearts, two different souls... but one beautiful destiny. We were never meant to be apart.',
     heartsAfter: 'Somewhere between a first hello and a thousand little moments, your heartbeat became home to mine.',
@@ -57,6 +71,9 @@ window.LOVE_DEFAULTS = {
     ctaGalleryNext: 'There’s another secret waiting →',
     ctaPuzzleNext: 'Walk through our years together →',
     ctaTimelineNext: 'One more surprise awaits →',
+    ctaPoetryNext: 'Continue our story ♡',
+    ctaProposalReveal: 'Open our promise ♡',
+    ctaProposalNext: 'One question remains ♡',
     ctaFinal: 'Open My Final Message 💌',
     ctaRestart: 'Read our story again ↺'
   },
@@ -67,8 +84,15 @@ window.LOVE_DEFAULTS = {
   ],
   media: {
     hero: 'assets/holding-hands.jpg',
+    firstMeet: 'assets/flower-moment.jpg',
+    proposal: 'assets/little-care.jpg',
     music: 'assets/our-song.mp3'
   },
+  poetry: [
+    {id:'poem-1', title:'Where Forever Began', verse:'It was only a hello,\nbut it stayed with me for years.\nSomehow the smallest moment\nbecame my favourite forever.'},
+    {id:'poem-2', title:'In Every Ordinary Day', verse:'Not in grand promises,\nbut in little ways you stayed—\nI found my safest place\nin the warmth of your everyday.'},
+    {id:'poem-3', title:'Choose You, Again', verse:'If time returned to our first day,\nand asked what I would do,\nI would smile at all the years ahead\nand choose, once more, you.'}
+  ],
   memories: [
     {
       id: 'memory-1', title: 'Our First Meet', kicker: 'CHAPTER ONE',

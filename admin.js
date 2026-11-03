@@ -23,6 +23,7 @@
     {id:'event',name:'Names & Countdown',icon:'◷'},
     {id:'words',name:'Love Words & Quiz',icon:'♡'},
     {id:'memories',name:'Photos & Chapters',icon:'▣'},
+    {id:'romance',name:'Client V2 · Ribbon & Proposal',icon:'🎀'},
     {id:'timeline',name:'Love Timeline',icon:'✧'},
     {id:'theme',name:'Colors & Music',icon:'♫'},
     {id:'files',name:'Uploaded Files',icon:'⌑'}
@@ -134,6 +135,47 @@
       `<div class="admin-hint">The interactive love puzzle uses the first <b>four chapters in order</b>. Move chapters up or down here to decide the correct answer. The default design has four chapters, but you can add more photos within each one.</div>`+
       chapters+`<button class="button button-outline" type="button" data-action="add-memory">+ Add another chapter</button>`+publishBar();
   }
+  function renderRomance() {
+    const toggles = section('Interactive experience — ON / OFF', `
+      <p class="section-sub">Change effects here without editing code. All changes go live only after Publish Changes.</p>
+      <label class="checkline"><input type="checkbox" data-path="features.ribbonTransitions" ${state.features.ribbonTransitions?'checked':''}> Ribbon heart transition between chapters (tap to untie)</label>
+      <label class="checkline"><input type="checkbox" data-path="features.poetry" ${state.features.poetry?'checked':''}> Show romantic poetry chapter</label>
+      <label class="checkline"><input type="checkbox" data-path="features.proposal" ${state.features.proposal?'checked':''}> Show proposal / promise chapter</label>
+      <label class="checkline"><input type="checkbox" data-path="features.fallingHearts" ${state.features.fallingHearts?'checked':''}> Show subtle falling hearts on all pages</label>
+      ${area('Ribbon heart message','copy.ribbonPrompt',3)}
+      <p class="admin-hint">The ribbon works only at unlocked chapter transitions. Quiz and puzzle must still be solved before proceeding.</p>`);
+
+    const photo = (title,key,tip) => `<div class="v2-media-item"><div><span class="eyebrow">${esc(title)}</span><div class="v2-image-preview"><img src="${safeUrl(state.media[key])}" alt="${esc(title)}"></div></div><div class="file-actions"><p class="section-sub">${esc(tip)}</p><label>Upload / replace ${esc(title)}<input type="file" accept="image/jpeg,image/png,image/webp,image/*" data-upload="v2-${esc(key)}"></label><button class="mini-btn" type="button" data-action="reset-v2-media" data-key="${esc(key)}">Use starter illustration</button></div></div>`;
+
+    const cover = section('Two photos immediately after countdown',`
+      <p class="section-sub">First the couple's first meeting, then the sitting/talking photograph. The lower photograph reuses your existing Hero Photo, so your uploaded picture is preserved.</p>
+      ${photo('First Meet Photo','firstMeet','This appears ABOVE the existing sitting photo on the first story page. Original couple picture can be uploaded later.')}
+      <div class="divider-line"></div>
+      <div class="admin-hint">Second picture = existing <b>Photos & Chapters → Front cover / hero image</b>. That previous photo is kept exactly as saved in Supabase.</div>
+      ${area('First photo heading','copy.meetTitle',2)}${area('First photo caption','copy.meetCaption',3)}
+      ${area('Sitting photo heading','copy.sittingTitle',2)}${area('Sitting photo caption','copy.sittingCaption',3)}
+      <div class="form-grid">${selectField('First Meet photo display','layout.meetFit',[['contain','Full photo — no cropping'],['cover','Fill frame — may crop']])}${selectField('Sitting / Hero photo display','layout.heroFit',[['contain','Full photo — no cropping'],['cover','Fill frame — may crop']])}</div>`);
+
+    const proposal=section('Romantic Proposal — photo & cinematic reveal',`
+      ${photo('Proposal Photo','proposal','An original proposal photo can be supplied later. We only animate the photo gently; we do not alter faces.')}
+      ${area('Proposal scene title','copy.proposalTitle',2)}${area('Proposal scene introduction','copy.proposalIntro',4)}${area('Revealed emotional promise','copy.proposalSecret',5)}
+      <div class="form-grid">${selectField('Proposal photo display','layout.proposalFit',[['contain','Full photo — no cropping'],['cover','Fill frame — may crop']])}${field('Reveal button text','copy.ctaProposalReveal')}</div>
+      ${field('Continue button text','copy.ctaProposalNext')}`);
+
+    const poems=(state.poetry||[]).map((poem,i)=>`<div class="editor-card"><div class="editor-row"><h4>Poetry Card ${i+1}</h4><div class="mini-buttons"><button class="mini-btn" type="button" data-action="move-poem" data-index="${i}" data-dir="-1" ${i===0?'disabled':''}>↑</button><button class="mini-btn" type="button" data-action="move-poem" data-index="${i}" data-dir="1" ${i===(state.poetry.length-1)?'disabled':''}>↓</button><button class="mini-btn warn" type="button" data-action="delete-poem" data-index="${i}" ${state.poetry.length<=1?'disabled':''}>Delete</button></div></div>${field('Short title',`poetry.${i}.title`)}${area('Poem / personal lines',`poetry.${i}.verse`,5)}</div>`).join('');
+    const poetry=section('Love poetry & novel-like writing',`
+      ${area('Poetry chapter heading','copy.poetryTitle',2)}${area('Poetry introduction','copy.poetryIntro',3)}
+      ${poems}<button type="button" class="button button-outline" data-action="add-poem">+ Add poetry card</button>
+      ${field('Continue from poetry button','copy.ctaPoetryNext')}
+      <p class="field-note">All texts are editable. Replace starter poetry with the couple's own lines when provided.</p>`);
+
+    const gift=section('The sweet final surprise',`
+      ${selectField('Choose gift decoration','gifts.style',[['rose-chocolates','Rose between two chocolates (premium)'],['rose-teddy','Rose + chocolate + teddy bear']])}
+      ${area('Gift title','copy.giftTitle',2)}${area('Final sweet message','copy.giftMessage',4)}
+      <p class="admin-hint">The gift decoration is made with HTML/CSS; no external image is required.</p>`);
+
+    return header('Client Version 2 — your romantic direction.','Manage the first-meet photo, chapter-opening ribbon heart, proposal memory, poetry cards and final rose gifts here. Existing photo uploads and login are preserved.') + toggles+cover+proposal+poetry+gift+publishBar();
+  }
   function renderTimeline(){
     const items=(state.timeline||[]).map((item,i)=>`<div class="editor-section"><div class="editor-row"><h3 class="row-title">${esc(item.title || 'New memory')}</h3><div class="mini-buttons"><button class="mini-btn" type="button" data-action="move-time" data-index="${i}" data-dir="-1" ${i===0?'disabled':''}>↑</button><button class="mini-btn" type="button" data-action="move-time" data-index="${i}" data-dir="1" ${i===state.timeline.length-1?'disabled':''}>↓</button><button class="mini-btn warn" type="button" data-action="delete-time" data-index="${i}">Delete</button></div></div><div class="form-grid">${field('Year, date or label',`timeline.${i}.when`)}${field('Milestone title',`timeline.${i}.title`)}</div>${area('Milestone story',`timeline.${i}.description`,4)}<div class="file-row">${item.image?`<img src="${safeUrl(item.image)}" alt="Milestone photo">`:''}<div class="file-actions"><label>Replace milestone picture<input type="file" data-upload="timeline" data-index="${i}" accept="image/*"></label>${item.image?`<button type="button" class="mini-btn warn" data-action="remove-timeline-image" data-index="${i}">Remove picture</button>`:''}</div></div></div>`).join('');
     return header('The years we built together.','Create a meaningful path from college to engagement. Edit each date, write your real milestones, and upload a photo for every special chapter.')+
@@ -159,7 +201,7 @@
   }
   function render(){
     $('#admin-nav').innerHTML=tabs.map(t=>`<button type="button" class="nav-tab ${t.id===tab?'active':''}" data-tab="${t.id}"><span class="tab-icon">${t.icon}</span>${esc(t.name)}</button>`).join('');
-    editor.innerHTML=({event:renderEvent,words:renderWords,memories:renderMemories,timeline:renderTimeline,theme:renderTheme,files:renderFiles}[tab])();
+    editor.innerHTML=({event:renderEvent,words:renderWords,memories:renderMemories,timeline:renderTimeline,theme:renderTheme,romance:renderRomance,files:renderFiles}[tab])();
     if(tab==='event')updateFontPreview();
     if(tab==='theme')for(const key of ['bg','surface','accent','gold','text']) {
       // Visually update only this admin preview's theme, never mutate the published site until Save.
@@ -191,6 +233,8 @@
     try {
       const target=input.dataset.upload;
       if(target==='hero')state.media.hero=await uploadAsset(input.files[0],'photo');
+      if(target==='v2-firstMeet')state.media.firstMeet=await uploadAsset(input.files[0],'photo');
+      if(target==='v2-proposal')state.media.proposal=await uploadAsset(input.files[0],'photo');
       if(target==='music'){state.media.music=await uploadAsset(input.files[0],'music');state.flags.musicEnabled=true;}
       if(target==='timeline')state.timeline[Number(input.dataset.index)].image=await uploadAsset(input.files[0],'photo');
       if(target==='chapter') {
@@ -228,6 +272,7 @@
     if(!(Number(state.typography?.heroMobileSize)>=38 && Number(state.typography?.heroMobileSize)<=108))return 'Mobile name font size must be 38-108 px.';
     if(!state.collegeOptions.some(choice=>choice.correct))return 'Please mark one quiz answer as correct.';
     if(!state.memories?.length)return 'Please keep at least one memory chapter.';
+    if(state.features?.poetry && !state.poetry?.length)return 'Please keep at least one poetry card or disable poetry.';
     return '';
   }
   async function publish(){
@@ -292,6 +337,10 @@
     const b=event.target.closest('[data-action]');if(!b || b.disabled)return;
     const action=b.dataset.action,index=Number(b.dataset.index),direction=Number(b.dataset.dir);
     if(action==='save')return publish();
+    if(action==='reset-v2-media'){const key=b.dataset.key;if(['firstMeet','proposal'].includes(key)){state.media[key]=window.LOVE_DEFAULTS.media[key];markDirty();render();}return;}
+    if(action==='add-poem'){state.poetry.push({id:'poem-'+Date.now(),title:'One more love note',verse:'Write a little poem from your heart...'});markDirty();render();return;}
+    if(action==='delete-poem'){if(state.poetry.length>1 && confirm('Delete this poetry card?')){state.poetry.splice(index,1);markDirty();render();}return;}
+    if(action==='move-poem'){shiftItem('poetry',index,direction);return;}
     if(action==='reset-name-font'){state.typography=clone(window.LOVE_DEFAULTS.typography);markDirty();render();showToast('Original romantic font restored in editor. Publish to apply.');return;}
     if(action==='add-choice'){state.collegeOptions.push({id:'choice-'+Date.now(),label:'Another lovely possibility',correct:false});markDirty();render();}
     if(action==='delete-choice'){

@@ -58,6 +58,7 @@
     const desktop = Math.max(60, Math.min(190, Number(t.heroDesktopSize) || 134));
     const mobile = Math.max(38, Math.min(108, Number(t.heroMobileSize) || 74));
     root.setProperty('--hero-name-font', family);
+    document.documentElement.dataset.heroCase=t.heroCase || 'original';
     root.setProperty('--hero-name-case', casing);
     root.setProperty('--hero-name-style', t.heroStyle === 'italic' ? 'italic' : 'normal');
     root.setProperty('--hero-name-desktop-size', desktop + 'px');
@@ -100,7 +101,7 @@
   function initials() {
     const a = data.couple.nameOne?.trim()?.[0] || 'A';
     const b = data.couple.nameTwo?.trim()?.[0] || 'A';
-    return `${html(a.toUpperCase())} <i>♥</i> ${html(b.toUpperCase())}`;
+    return `${html(a.toUpperCase())} <i>&hearts;</i> ${html(b.toUpperCase())}`;
   }
   function totalPhotos(chapter) { return Array.isArray(chapter.photos) ? chapter.photos : []; }
   function mainImage(chapter) { return media(totalPhotos(chapter)[0]?.url || data.media.hero); }
@@ -140,20 +141,35 @@
   }
   function fitClass(value) {return value === 'cover' ? 'fit-cover' : 'fit-contain';}
   function renderWelcome() {
-    return `<section class="scene hero-scene active align-${data.layout?.heroAlign === 'center' ? 'center' : 'left'} focus-${['top','center','bottom'].includes(data.layout?.heroFocus) ? data.layout.heroFocus : 'center'}" data-scene="0">
+    return `<section class="scene hero-scene active align-${data.layout?.heroAlign === 'center' ? 'center' : 'left'}" data-scene="0">
       <div class="hero-content">
-        <span class="eyebrow">✧ ${html(data.couple.eyebrow)} ✧</span>
-        <h1 class="hero-names">${html(data.couple.nameOne)}<em>&</em>${html(data.couple.nameTwo)}</h1>
+        <span class="eyebrow hero-overline">✧ &nbsp; ${html(data.couple.eyebrow)} &nbsp; ✧</span>
+        <h1 class="hero-names"><span>${html(data.couple.nameOne)}</span><em>&amp;</em><span>${html(data.couple.nameTwo)}</span></h1>
         <h2 class="hero-title">${html(data.copy.heroKicker)}</h2>
         <p class="hero-quote">“${html(data.copy.heroQuote)}”</p>
-        <div class="small-divider">♥</div>
-        <button class="button button-primary button-large" data-action="begin" type="button">${html(data.copy.ctaStart)} <span>✧</span></button>
-        <p class="helper-note" style="margin-top:20px">${html(data.copy.heroNote)}</p>
+        <div class="small-divider premium-divider">♥</div>
+        <div class="hero-desktop-cta"><button class="button button-primary button-large" data-action="begin" type="button">${html(data.copy.ctaStart)} <span>✧</span></button><p class="helper-note">${html(data.copy.heroNote)}</p></div>
       </div>
       <div class="hero-photo-story">
-        <figure class="meet-frame ${fitClass(data.layout?.meetFit)}"><img src="${media(data.media.firstMeet || data.memories?.[0]?.photos?.[0]?.url)}" alt="Our first meeting memory"><figcaption><small>01 · OUR FIRST MEET</small><strong>${html(data.copy.meetTitle)}</strong><span>${html(data.copy.meetCaption)}</span></figcaption></figure>
-        <figure class="sitting-frame ${fitClass(data.layout?.heroFit)}"><img src="${media(data.media.hero)}" alt="Ayyapan and Arthi together"><figcaption><small>02 · THE LITTLE MOMENTS</small><strong>${html(data.copy.sittingTitle)}</strong><span>${html(data.copy.sittingCaption)}</span></figcaption><div class="sitting-stamp">Forever <small>${html(displayDate())}</small></div></figure>
+        <figure class="love-photo love-photo--meet ${fitClass(data.layout?.meetFit)}">
+          <div class="love-photo-mat"><img src="${media(data.media.firstMeet || data.memories?.[0]?.photos?.[0]?.url)}" alt="Our first meeting" loading="eager"></div>
+          <figcaption><span class="love-photo-index">01 · THE FIRST HELLO</span><strong>${html(data.copy.meetTitle)}</strong><small>${html(data.copy.meetCaption)}</small></figcaption>
+        </figure>
+        <!-- Follow the dotted trail down from our first hello directly to the next photo. -->
+        <div class="love-route" aria-hidden="true">
+          <svg viewBox="0 0 360 142" preserveAspectRatio="none" focusable="false">
+            <path class="route-dashes" d="M24 12 C66 34 48 90 125 82 S232 45 273 79 S301 117 319 132" />
+            <path class="route-arrow" d="M306 123 L320 134 L329 117" />
+          </svg>
+          <span class="route-heart">♥</span><span class="route-whisper">and then, us...</span>
+        </div>
+        <figure class="love-photo love-photo--together ${fitClass(data.layout?.heroFit)}">
+          <div class="love-photo-mat"><img src="${media(data.media.hero)}" alt="Our little moments together" loading="eager"></div>
+          <figcaption><span class="love-photo-index">02 · A THOUSAND LITTLE MOMENTS</span><strong>${html(data.copy.sittingTitle)}</strong><small>${html(data.copy.sittingCaption)}</small></figcaption>
+          <div class="sitting-stamp" aria-label="Engagement date">Forever <small>${html(displayDate())}</small></div>
+        </figure>
       </div>
+      <div class="hero-mobile-cta"><button class="button button-primary button-large" data-action="begin" type="button">${html(data.copy.ctaStart)} <span>✧</span></button><p class="helper-note">${html(data.copy.heroNote)}</p></div>
     </section>`;
   }
 
@@ -198,7 +214,7 @@
   function renderPoetry() {
     return `<section class="scene poetry-scene" data-scene="5">
       <div class="section-top"><span class="eyebrow">05 · THE WORDS BETWEEN OUR HEARTBEATS</span><h2 class="display">${html(data.copy.poetryTitle)}</h2><p class="lead">${html(data.copy.poetryIntro)}</p></div>
-      <div class="poetry-grid">${(data.poetry || []).map((p,i)=>`<article class="poem-card"><span class="poem-number">♡ &nbsp; ${String(i+1).padStart(2,'0')}</span><h3>${html(p.title)}</h3><p>${text(p.verse)}</p><span class="poem-flourish">✧　♡　✧</span></article>`).join('')}</div>
+      <div class="poetry-grid">${(data.poetry || []).map((p,i)=>`<article class="poem-card" lang="${/[\u0B80-\u0BFF]/.test(`${p.title} ${p.verse}`) ? 'ta' : 'en'}"><span class="poem-number">♡ &nbsp; ${String(i+1).padStart(2,'0')}</span><h3>${html(p.title)}</h3><p>${text(p.verse)}</p><span class="poem-flourish">✧　♡　✧</span></article>`).join('')}</div>
       <div class="scene-actions"><button class="button button-primary" type="button" data-action="next">${html(data.copy.ctaPoetryNext)}</button></div>
     </section>`;
   }
@@ -224,12 +240,12 @@
     </section>`;
   }
   function renderLetter() {
-    const gift=data.gifts?.style || 'rose-chocolates';
-    const box1='<span class="chocolate">♥</span>';
-    const rose='<span class="gift-rose" aria-hidden="true"><span class="rose-flower">✿</span><span class="rose-stem"></span></span>';
-    const present=gift==='rose-teddy' ? `${rose}<span class="gift-teddy">🧸</span><span class="chocolate">♥</span>` : `${box1}${rose}${box1}`;
+    const hasGift = typeof data.media?.gift === 'string' && data.media.gift.trim().length > 0;
+    const giftPicture = hasGift
+      ? `<div class="gift-photo-frame ${fitClass(data.layout?.giftFit)}"><img src="${media(data.media.gift)}" alt="A special engagement gift for our forever" loading="lazy"></div>`
+      : `<div class="gift-photo-placeholder" aria-label="Gift image coming soon"><span class="placeholder-star">✦</span><span class="script">A little surprise</span><small>A MEMORY STILL TO COME</small><span class="placeholder-heart">♡</span></div>`;
     return `<section class="scene final-message-scene" data-scene="9"><div class="final-letter-frame"><span class="eyebrow">09 · A PROMISE FROM MY HEART</span><h1>${html(data.copy.finalLetterTitle)}</h1><div class="letter-salutation">To my forever person,</div><div class="letter-prose">${text(data.copy.finalLetter)}</div><div class="letter-seal">${html(data.couple.nameOne)} & ${html(data.couple.nameTwo)} ♡</div></div>
-      <div class="gift-finale"><span class="eyebrow">A LITTLE GIFT FOR YOU</span><h2 class="display">${html(data.copy.giftTitle)}</h2><div class="gift-tray" aria-label="Romantic rose and sweets">${present}</div><p>${html(data.copy.giftMessage)}</p><span class="script gift-names">${html(data.couple.nameOne)} ♡ ${html(data.couple.nameTwo)}</span></div>
+      <div class="gift-finale"><span class="eyebrow">THE LAST LITTLE SURPRISE</span><h2 class="display">${html(data.copy.giftTitle)}</h2><div class="gift-picture-region">${giftPicture}</div><p>${html(data.copy.giftMessage)}</p><span class="script gift-names">${html(data.couple.nameOne)} ♡ ${html(data.couple.nameTwo)}</span></div>
       <p class="final-bottom">${html(data.copy.endingLine)}</p><p class="helper-note" style="text-align:center;margin-top:18px">${html(displayDate())} · Our engagement, our promise, our forever.</p><div class="scene-actions"><button type="button" class="button button-outline" data-action="restart">${html(data.copy.ctaRestart)}</button></div></section>`;
   }
 
@@ -292,12 +308,15 @@
   function requestTransition(next) {
     const target=forwardIndex(next);
     if (target >= N || target > maxUnlocked || transitionBusy) return;
-    if(data.features?.ribbonTransitions === false || window.matchMedia('(prefers-reduced-motion: reduce)').matches){goTo(target);return;}
+    // Only ONE signature traced-heart transition, not at every chapter.
+    const moment=data.features?.ribbonMoment || 'intro';
+    const special=(moment==='intro' && target===1) || (moment==='final' && target===9);
+    if(!special || data.features?.ribbonTransitions === false || window.matchMedia('(prefers-reduced-motion: reduce)').matches){goTo(target);return;}
     transitionTarget = target;
     const overlay=$('#ribbon-transition'); overlay.hidden=false; overlay.classList.remove('is-opening');
     $('#ribbon-heart-trigger').disabled=false;
-    $('#ribbon-title').textContent = 'A memory is waiting inside...';
-    $('#ribbon-help').textContent = data.copy.ribbonPrompt || 'Tap the heart to untie the next little chapter.';
+    $('#ribbon-title').textContent = 'Every love story has a next page.';
+    $('#ribbon-help').textContent = data.copy.ribbonPrompt || 'Touch the heart, and our story continues.';
     $('#ribbon-peek-image').src=media(transitionImage(target));
     document.body.style.overflow='hidden';
     $('#ribbon-heart-trigger').focus();
@@ -312,9 +331,9 @@
     transitionBusy=true;
     $('#ribbon-heart-trigger').disabled=true;
     $('#ribbon-transition').classList.add('is-opening');
-    $('#ribbon-title').textContent='Our next chapter is opening ♡';
+    $('#ribbon-title').textContent='And our story continues...';
     twinkleFrom(innerWidth/2,innerHeight/2,19);
-    setTimeout(completeTransition, 1350);
+    setTimeout(completeTransition, 1800);
   }
 
   function twinkleFrom(x, y, amount=11) {

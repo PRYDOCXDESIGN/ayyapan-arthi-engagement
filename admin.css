@@ -19,3 +19,10 @@
 .v2-image-preview img{width:100%;max-height:270px;display:block;object-fit:contain}
 .v2-media-item .file-actions{min-width:0}
 @media(max-width:750px){.v2-media-item{grid-template-columns:1fr;padding:12px}.v2-image-preview{max-width:100%}}
+
+/* Premium V3 · gift image upload / Tamil editor readability */
+.gift-admin-preview{min-height:135px;display:grid;place-items:center;}
+.gift-admin-preview img{max-height:230px;object-fit:contain;}
+.gift-admin-empty{font:400 2.8rem/1.2 Georgia,serif;color:var(--accent);text-align:center;padding:22px 10px;}
+.gift-admin-empty small{font:400 .75rem/1.6 'DM Sans',sans-serif;letter-spacing:.04em;color:var(--muted);}
+.admin-body textarea:lang(ta),.admin-body textarea{unicode-bidi:plaintext;}

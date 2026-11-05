@@ -147,27 +147,14 @@
   letter-spacing: .005em;
   max-width: 68ch;
 }
-/* A soft embossed wax seal at the end of the letter */
+/* Closing signature: elegant script only. No circular seal or stray glyph. */
 .final-letter-frame .letter-seal {
   color: #945469;
   font-size: clamp(2.25rem, 4vw, 3.25rem);
-  margin-top: 40px;
+  margin-top: 31px;
   line-height: 1.25;
 }
-.final-letter-frame .letter-seal::before {
-  content: '\2665';
-  display: grid;
-  place-items: center;
-  width: 65px;
-  height: 65px;
-  margin: 0 auto 20px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 25%, #cb8a96, #9d4e69 65%, #753b53);
-  border: 2px solid rgba(125, 50, 72, .36);
-  color: #ffe8e2;
-  font: 30px/1 Georgia, serif;
-  box-shadow: 0 7px 16px rgba(95, 49, 61, .22), inset 0 2px 8px rgba(255,255,255,.22);
-}
+.final-letter-frame .letter-seal::before { content: none !important; display: none !important; }
 
 /* 3. Desktop timeline: slightly larger, more balanced cards */
 @media (min-width: 721px) {
@@ -421,3 +408,421 @@
 .mini-ribbon-heart{position:relative;display:inline-grid;place-items:center;font:30px Georgia,serif;color:#de92a9;line-height:1;text-shadow:0 0 12px rgba(227,145,172,.25)}
 .mini-ribbon-heart i{position:absolute;left:45%;top:50%;transform:translate(-40%,-50%) rotate(25deg);font:12px Georgia,serif;color:#f2d39d;font-style:normal;text-shadow:0 1px 2px #663c41}
 @media(max-width:440px){.nav-next-ribbon{gap:6px}.nav-next-ribbon>span:last-child{font-size:.69rem}}
+
+/* ================================================================
+   PREMIUM REVISION V3 · AYYAPAN + ARTHI
+   Restores V1 cinematic restraint while retaining V2 admin features.
+   ================================================================ */
+
+/* 1. Header glyph fix: reliable web-safe letters (never emoji font). */
+.brandmark > span,
+#brand-initials {
+  font-family: Georgia, 'Times New Roman', serif !important;
+  font-size: clamp(1.2rem, 2.3vw, 1.6rem) !important;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: .18em;
+  white-space: nowrap;
+  font-variant-ligatures: none;
+}
+#brand-initials i {
+  font-family: Georgia, 'Times New Roman', serif !important;
+  font-weight: 400;
+  font-style: normal;
+  font-size: .78em;
+  color: var(--accent);
+  padding: 0 .32em;
+  margin: 0;
+}
+.site-header {position: relative; z-index: 3;}
+
+/* 2. Premium opening: editorial typography + two moments joined by a path */
+.scene.hero-scene.active {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.12fr) minmax(330px, .88fr);
+  align-items: center;
+  gap: clamp(28px, 5.8vw, 98px);
+  max-width: 1380px;
+  margin: 0 auto;
+  min-height: 780px;
+  padding-top: clamp(52px, 7vw, 105px);
+  padding-bottom: 96px;
+  overflow: hidden;
+}
+.hero-scene .hero-content {
+  display: block !important;
+  text-align: left;
+  padding: 0 0 10px;
+  min-width: 0;
+  max-width: 650px;
+}
+.hero-scene.align-center .hero-content {text-align:center;}
+.hero-scene .hero-overline {
+  display: inline-block;
+  font-size: .68rem;
+  letter-spacing: .21em;
+  margin-bottom: 15px;
+}
+.hero-scene .hero-names {
+  color: var(--gold);
+  font-family: var(--hero-name-font,'Great Vibes',cursive);
+  font-style: var(--hero-name-style,normal);
+  font-size: min(var(--hero-name-desktop-size,134px), 9.7vw);
+  text-transform: var(--hero-name-case,none);
+  line-height: 1.05;
+  margin: 12px auto 22px 0;
+  padding: .05em .06em .13em;
+  font-weight: 400;
+  overflow-wrap: anywhere;
+  max-width: 100%;
+  text-shadow: 0 8px 35px rgba(0,0,0,.20);
+}
+.hero-scene.align-center .hero-names {margin-left:auto;margin-right:auto;}
+.hero-scene .hero-names > span {display:block;}
+.hero-scene .hero-names em {
+  display: block;
+  color: var(--accent);
+  font: normal .49em/1.2 'Great Vibes',cursive;
+  margin: .02em 0 .01em 29%;
+}
+.hero-scene .hero-title {
+  font:400 clamp(1.75rem,2.55vw,2.55rem)/1.3 'Italiana',Georgia,serif;
+  color: var(--text);
+  margin: 5px 0 22px;
+  max-width: 520px;
+  text-wrap: balance;
+}
+.hero-scene .hero-quote {
+  max-width: 550px;
+  font-size: 1.01rem;
+  line-height: 1.85;
+  margin: 20px 0 10px;
+  color: var(--muted);
+}
+.hero-scene .premium-divider {margin:16px 0 24px;}
+.hero-scene .hero-desktop-cta {display:block;margin-top:18px;}
+.hero-scene .hero-desktop-cta .helper-note {line-height:1.7;margin:16px 0;max-width:475px;}
+.hero-scene .hero-mobile-cta {display:none;}
+
+/* Each memory is a portrait on the way to forever, not a boxy card grid. */
+.hero-scene .hero-photo-story {
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  position:relative;
+  width:min(100%,490px);
+  max-width:100%;
+  padding:12px 5px 30px;
+  margin:0 auto;
+  gap:0;
+  justify-self:center;
+  min-width:0;
+}
+.hero-photo-story .love-photo {
+  position:relative;
+  display:block;
+  margin:0;
+  overflow:visible;
+  background:transparent;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+  isolation:isolate;
+}
+.hero-photo-story .love-photo--meet {width:84%;margin-right:auto;}
+.hero-photo-story .love-photo--together {width:89%;margin-left:auto;}
+.hero-photo-story .love-photo-mat {
+  display:block;
+  padding:9px;
+  border:1px solid rgba(238,212,168,.36);
+  background:linear-gradient(145deg,rgba(240,209,191,.085),rgba(41,27,44,.23));
+  box-shadow:0 20px 58px rgba(0,0,0,.3);
+  overflow:hidden;
+  position:relative;
+}
+.hero-photo-story .love-photo--meet .love-photo-mat {border-radius:185px 185px 12px 12px;}
+.hero-photo-story .love-photo--together .love-photo-mat {border-radius:13px 13px 185px 185px;}
+.hero-photo-story .love-photo-mat img,
+.hero-photo-story .meet-frame img,
+.hero-photo-story .sitting-frame img {
+  display:block;
+  width:100%;
+  height:auto !important;
+  max-height:400px !important;
+  object-fit:contain !important;
+  object-position:center !important;
+  background:rgba(27,17,33,.25);
+  filter:saturate(.94);
+}
+.hero-photo-story .love-photo--meet .love-photo-mat img {border-radius:177px 177px 6px 6px;}
+.hero-photo-story .love-photo--together .love-photo-mat img {border-radius:6px 6px 170px 170px;}
+.hero-photo-story .love-photo.fit-cover .love-photo-mat img {object-fit:cover !important;aspect-ratio:3/4;max-height:400px;}
+.hero-photo-story .love-photo figcaption {
+  display:flex;
+  align-items:flex-start;
+  flex-direction:column;
+  gap:5px;
+  position:relative;
+  padding:11px 8px 4px;
+  background:transparent;
+  text-align:left;
+}
+.hero-photo-story .love-photo-index {font-size:.57rem;letter-spacing:.22em;color:var(--gold);font-weight:700;}
+.hero-photo-story .love-photo figcaption strong {font:400 clamp(1.45rem,2.25vw,1.9rem)/1.18 'Italiana',Georgia,serif;color:var(--text);}
+.hero-photo-story .love-photo figcaption small {font-size:.76rem;color:var(--muted);line-height:1.65;}
+.hero-photo-story .sitting-stamp {
+  position:absolute;
+  right:-11px;
+  top:27px;
+  bottom:auto;
+  background:rgba(33,22,40,.9);
+  color:var(--gold);
+  border:1px solid var(--border);
+  border-radius:50%;
+  display:flex; flex-direction:column; justify-content:center; align-items:center;
+  width:105px;height:105px;
+  transform:rotate(9deg);
+  font:400 1.62rem/1 'Great Vibes',cursive;
+  box-shadow:0 12px 33px rgba(0,0,0,.26);
+  z-index:3;
+  pointer-events:none;
+}
+.hero-photo-story .sitting-stamp small {font:600 .44rem/1.5 'DM Sans',sans-serif;letter-spacing:.06em;text-align:center;padding-top:8px;}
+.hero-photo-story .love-route {
+  height:93px;
+  margin:-2px 0 -1px;
+  position:relative;
+  color:var(--accent);
+  z-index:4;
+  overflow:visible;
+}
+.hero-photo-story .love-route svg {display:block;width:91%;height:95px;margin:0 auto;opacity:.62;}
+.hero-photo-story .route-heart {
+  position:absolute;
+  top:37px;left:48%;
+  background:rgba(38,25,42,.93);
+  color:var(--accent);
+  font-size:1.8rem;
+  padding:2px 12px;
+  transform:translate(-50%,-20%);
+  animation:heartbeat 2.3s ease-in-out infinite;
+  text-shadow:0 0 16px rgba(227,139,174,.4);
+}
+.hero-photo-story .route-whisper {
+  position:absolute;bottom:0;right:6%;font:400 1.58rem 'Great Vibes',cursive;color:var(--gold);
+}
+
+/* 3. A single poetic line-drawn heart, inspired by the supplied motion reference. */
+.ribbon-transition {
+  background:radial-gradient(circle at 50% 47%,rgba(95,49,70,.32),transparent 60%),rgba(20,13,27,.965);
+  backdrop-filter:blur(20px);
+}
+.ribbon-transition::before {inset:4%;border-radius:18px;border-color:rgba(238,212,168,.17);}
+.ribbon-content {gap:6px;padding:34px 10px;max-width:600px;}
+.ribbon-content h2 {font:400 clamp(2rem,5vw,3.15rem)/1.24 'Italiana',serif;max-width:480px;}
+.ribbon-content>p {margin:7px auto 18px;font-size:.86rem;}
+.ribbon-heart-trigger {width:min(390px,85vw);height:min(365px,75vw);max-height:365px;margin:5px auto 0;display:grid;place-items:center;border-radius:28px;}
+.ribbon-heart-trigger svg {width:100%;height:100%;display:block;overflow:visible;filter:drop-shadow(0 2px 16px rgba(225,129,157,.2));}
+.ribbon-heart-trigger .heart-guide {stroke:rgba(222,144,167,.16);stroke-width:7;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.ribbon-heart-trigger .heart-trace {stroke:#e6a0b1;stroke-width:8;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1040;stroke-dashoffset:950;transition:stroke-dashoffset 1.15s ease-in-out, filter 1.15s;}
+.ribbon-heart-trigger .heart-touch-label {position:absolute;top:48%;left:50%;width:180px;transform:translate(-50%,-50%);text-align:center;font:400 1.46rem 'Great Vibes',cursive;color:var(--gold);text-shadow:0 0 18px #160f1d;transition:opacity .45s;}
+.ribbon-heart-trigger .heart-reveal-photo {position:absolute;left:50%;top:48%;transform:translate(-50%,-50%) scale(.7);border-radius:50%;width:118px;height:118px;opacity:0;overflow:hidden;border:1px solid var(--border);box-shadow:0 0 35px rgba(237,195,170,.3);transition:opacity .7s .85s,transform .7s .85s;}
+.ribbon-heart-trigger .heart-reveal-photo img {width:100%;height:100%;object-fit:cover;}
+.ribbon-transition.is-opening .heart-trace {stroke-dashoffset:0;filter:drop-shadow(0 0 13px rgba(230,160,177,.55));}
+.ribbon-transition.is-opening .heart-touch-label {opacity:0;}
+.ribbon-transition.is-opening .heart-reveal-photo {opacity:1;transform:translate(-50%,-50%) scale(1.08);}
+.ribbon-transition.is-opening .ribbon-content {animation:none;}
+.transition-skip {opacity:.7;font-size:.73rem;}
+
+/* 4. Tamil poems with understated ivory paper styling. */
+.poetry-grid {grid-template-columns:repeat(auto-fit,minmax(min(100%,315px),1fr));max-width:950px;gap:25px;}
+.poem-card,.poem-card:nth-child(2),.poem-card:nth-child(3) {
+  transform:none;
+  min-height:285px;
+  border-radius:10px;
+  padding:34px clamp(22px,3.2vw,38px) 42px;
+  box-shadow:0 20px 65px rgba(0,0,0,.22);
+  grid-column:auto;
+  max-width:none;
+  justify-self:stretch;
+  width:100%;
+}
+.poem-card[lang="ta"] h3,
+.poem-card[lang="ta"] p {
+  font-family:'Noto Serif Tamil','Noto Sans Tamil','Latha',serif;
+  line-height:1.95;
+  letter-spacing:0;
+}
+.poem-card[lang="ta"] h3 {font-size:1.35rem;line-height:1.7;}
+.poem-card[lang="ta"] p {font-size:1.01rem;line-height:2.05;}
+.poem-card p {white-space:pre-line;}
+
+/* 5. Gift area uses an uploadable IMAGE, never the CSS cartoon clover. */
+.gift-finale {
+  margin:65px auto 22px;
+  padding:clamp(30px,4vw,54px) clamp(18px,4vw,56px);
+  max-width:760px;
+  border-radius:18px;
+  background:radial-gradient(circle at 50% 35%,rgba(239,203,167,.075),transparent 50%),rgba(255,255,255,.025);
+}
+.gift-finale h2 {font-size:clamp(2.2rem,4.5vw,3.6rem);text-wrap:balance;}
+.gift-picture-region {width:min(100%,480px);margin:28px auto 27px;}
+.gift-photo-frame {display:grid;place-items:center;width:100%;padding:12px;border-radius:18px;border:1px solid var(--border);background:rgba(24,14,28,.5);box-shadow:0 16px 60px rgba(0,0,0,.28);overflow:hidden;}
+.gift-photo-frame img {display:block;width:100%;height:auto;max-height:540px;object-fit:contain;}
+.gift-photo-frame.fit-cover img {height:390px;object-fit:cover;}
+.gift-photo-placeholder {min-height:260px;border:1px solid rgba(238,212,168,.28);border-radius:18px;background:linear-gradient(140deg,rgba(246,226,208,.055),rgba(223,158,175,.045));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:var(--gold);position:relative;}
+.gift-photo-placeholder::after {content:'';position:absolute;inset:9px;border:1px solid rgba(238,212,168,.12);border-radius:12px;pointer-events:none;}
+.gift-photo-placeholder .script {font-size:clamp(2.3rem,5vw,3.6rem);}
+.gift-photo-placeholder small {font-size:.6rem;letter-spacing:.23em;color:var(--muted);}
+.gift-photo-placeholder .placeholder-star {font-size:2rem;opacity:.75;}
+.gift-photo-placeholder .placeholder-heart {position:absolute;bottom:14px;right:26px;font:2.3rem Georgia,serif;color:var(--accent);opacity:.35;}
+.gift-names {font-size:clamp(2.2rem,4vw,3.5rem);}
+
+/* 6. Keep all previously uploaded landscape/portrait images uncropped by default. */
+.time-card img {height:auto !important;max-height:none !important;aspect-ratio:auto !important;object-fit:contain !important;}
+.memory-cover {height:auto !important;max-height:430px;object-fit:contain !important;}
+.college-frame img {height:auto !important;max-height:480px !important;object-fit:contain !important;}
+.photo-modal .modal-photo img {object-fit:contain !important;}
+
+@media (max-width:1100px) and (min-width:721px) {
+  .scene.hero-scene.active{grid-template-columns:minmax(0,1fr) minmax(280px,.88fr);gap:26px;}
+  .hero-scene .hero-names{font-size:min(var(--hero-name-desktop-size,134px),8.3vw)}
+}
+
+/* Mobile is intentionally different but remains balanced, readable and premium. */
+@media (max-width:720px) {
+  .site-header {height:69px;padding:0 5.7%;}
+  .scene.hero-scene.active {
+    display:flex !important;
+    flex-direction:column;
+    justify-content:flex-start;
+    align-items:center;
+    gap:0;
+    min-height:auto;
+    padding:43px 5.6% 63px;
+    overflow:hidden;
+  }
+  .hero-scene .hero-content {display:block !important;order:0;text-align:center !important;width:100%;max-width:520px;padding:0;}
+  .hero-scene .hero-overline {font-size:.6rem;letter-spacing:.16em;line-height:1.75;margin-bottom:12px;}
+  .hero-scene .hero-names {
+    text-align:center;
+    margin:8px auto 18px;
+    font-size:min(var(--hero-name-mobile-size,74px),17vw);
+    line-height:1.12;
+    max-width:100%;
+    padding:10px 5px;
+  }
+  html[data-hero-case="upper"] .hero-names {font-size:min(var(--hero-name-mobile-size,74px),12.7vw);}
+  html[data-hero-case="lower"] .hero-names {font-size:min(var(--hero-name-mobile-size,74px),15vw);}
+  .hero-scene .hero-names em {margin:0 auto .02em;font-size:.48em;}
+  .hero-scene .hero-title {max-width:340px;margin:3px auto 18px;font-size:clamp(1.75rem,7vw,2.35rem);line-height:1.42;}
+  .hero-scene .hero-quote {max-width:410px;font-size:.94rem;line-height:1.9;margin:0 auto 8px;}
+  .hero-scene .premium-divider{justify-content:center;margin:15px auto 8px;}
+  .hero-scene .hero-desktop-cta{display:none;}
+  .hero-scene .hero-photo-story{order:1;width:min(100%,460px);max-width:100%;margin:27px auto 0;padding:0 2px 7px;gap:0;}
+  .hero-photo-story .love-photo--meet {width:90%;}
+  .hero-photo-story .love-photo--together {width:92%;}
+  .hero-photo-story .love-photo-mat{padding:8px;}
+  .hero-photo-story .love-photo-mat img {max-height:400px !important;height:auto !important;}
+  .hero-photo-story .love-photo figcaption {padding:13px 7px 0;gap:5px;}
+  .hero-photo-story .love-photo figcaption strong {font-size:1.65rem;}
+  .hero-photo-story .love-photo figcaption small {font-size:.73rem;}
+  .hero-photo-story .love-route{height:91px;margin:0;}
+  .hero-photo-story .love-route svg{height:82px;}
+  .hero-photo-story .route-heart{top:29px;left:49%;font-size:1.5rem;}
+  .hero-photo-story .route-whisper {bottom:0;font-size:1.45rem;}
+  .hero-photo-story .sitting-stamp {width:80px;height:80px;font-size:1.35rem;right:-4px;top:20px;}
+  .hero-photo-story .sitting-stamp small {font-size:.36rem;padding:5px 6px 0;}
+  .hero-scene .hero-mobile-cta{display:flex;order:2;width:100%;max-width:470px;flex-direction:column;align-items:center;text-align:center;gap:14px;margin:28px auto 0;}
+  .hero-mobile-cta .button {width:min(100%,385px);min-height:58px;padding:15px 20px;font-size:.78rem;}
+  .hero-mobile-cta .helper-note{max-width:340px;margin:0 auto;line-height:1.7;font-size:.75rem;}
+  .ribbon-content h2{font-size:clamp(2rem,7vw,2.7rem);}
+  .ribbon-heart-trigger{height:min(300px,78vw);}
+  .poetry-grid{grid-template-columns:1fr;gap:21px;max-width:500px;}
+  .poem-card{min-height:240px;}
+  .poem-card:nth-child(3){grid-column:auto;}
+  .gift-finale{margin-top:48px;padding:32px 20px;}
+  .gift-picture-region{width:100%;}
+  .gift-photo-placeholder{min-height:220px;}
+}
+@media(max-width:370px) {
+  .hero-scene .hero-overline{font-size:.54rem;}
+  .hero-scene .hero-names{font-size:min(var(--hero-name-mobile-size,74px),16vw);}
+  .hero-photo-story .sitting-stamp{right:-1px;width:70px;height:70px;}
+}
+@media(prefers-reduced-motion:reduce) {
+  .hero-photo-story .route-heart{animation:none;}
+  .ribbon-heart-trigger .heart-trace{transition:none;stroke-dashoffset:0;}
+}
+
+
+/* PREMIUM V3.1 FINAL REVIEW: a delicate downward path, anchored to photo two. */
+.hero-photo-story .love-route {
+  height: 130px;
+  margin: 3px 0 -7px;
+  position: relative;
+  z-index: 2;
+  overflow: visible;
+  color: var(--accent);
+  pointer-events: none;
+}
+.hero-photo-story .love-route svg {
+  width: min(94%, 430px);
+  height: 132px;
+  display: block;
+  margin: 0 auto;
+  opacity: .78;
+  overflow: visible;
+}
+.hero-photo-story .route-dashes {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.55;
+  stroke-dasharray: 2.6 8;
+  stroke-linecap: round;
+}
+.hero-photo-story .route-arrow {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.hero-photo-story .route-heart {
+  position: absolute;
+  top: 47px;
+  left: 46%;
+  padding: 2px 11px;
+  background: color-mix(in srgb, var(--bg) 90%, transparent);
+  color: var(--accent);
+  font-size: 1.35rem;
+  line-height: 1.2;
+  transform: translateX(-50%);
+  text-shadow: 0 0 10px rgba(227,139,174,.28);
+  animation: heartbeat 2.8s ease-in-out infinite;
+}
+.hero-photo-story .route-whisper {
+  position: absolute;
+  left: 9%; right: auto; bottom: 8px;
+  color: var(--gold);
+  font: 400 clamp(1.35rem,3vw,1.65rem)/1 'Great Vibes',cursive;
+  white-space: nowrap;
+}
+.hero-photo-story .love-photo--together { position: relative; z-index: 3; }
+/* Hide the meaningless circular stamp after the final love letter, keep signed names. */
+.final-letter-frame .letter-seal::before,
+.final-letter-frame .letter-seal:before { content: none !important; display: none !important; }
+@media(max-width:720px) {
+  .hero-photo-story .love-route { height: 122px; margin: 0 0 -4px; }
+  .hero-photo-story .love-route svg { width: 97%; height: 122px; }
+  .hero-photo-story .route-heart { top: 44px; left: 46%; font-size: 1.25rem; }
+  .hero-photo-story .route-whisper { bottom: 7px; left: 7%; font-size: 1.42rem; }
+}
+@media(max-width:390px) {
+  .hero-photo-story .love-route { height: 115px; }
+  .hero-photo-story .love-route svg { height: 115px; }
+  .hero-photo-story .route-whisper { font-size: 1.3rem; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .hero-photo-story .route-heart { animation: none; }
+}

@@ -99,10 +99,8 @@
     return false;
   }
   function initials() {
-    const a = data.couple.nameOne?.trim()?.[0] || 'A';
-    const b = data.couple.nameTwo?.trim()?.[0] || 'A';
-    return `${html(a.toUpperCase())} <i>&hearts;</i> ${html(b.toUpperCase())}`;
-  }
+    return 'A <i>&hearts;</i> A';
+}
   function totalPhotos(chapter) { return Array.isArray(chapter.photos) ? chapter.photos : []; }
   function mainImage(chapter) { return media(totalPhotos(chapter)[0]?.url || data.media.hero); }
   function itemImage(item) { return media(item.image || data.media.hero); }

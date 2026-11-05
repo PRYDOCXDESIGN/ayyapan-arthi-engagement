@@ -1,6 +1,6 @@
 /* All starting words, photos and colors. After Supabase setup, use admin.html to edit without coding. */
 window.LOVE_DEFAULTS = {
-  version: 2,
+  version: 3,
   couple: {
     nameOne: 'Ayyapan',
     nameTwo: 'Arthi',
@@ -11,9 +11,9 @@ window.LOVE_DEFAULTS = {
     eventLabel: 'OUR ENGAGEMENT'
   },
   flags: { forceOpen: false, musicEnabled: true },
-  features: { ribbonTransitions: true, poetry: true, proposal: true, fallingHearts: true },
+  features: { ribbonTransitions: true, ribbonMoment: 'intro', poetry: true, proposal: true, fallingHearts: true },
   gifts: { style: 'rose-chocolates' },
-  layout: { heroAlign: 'left', heroFocus: 'center', heroFit: 'contain', meetFit: 'contain', proposalFit: 'contain' },
+  layout: { heroAlign: 'left', heroFocus: 'center', heroFit: 'contain', meetFit: 'contain', proposalFit: 'contain', giftFit: 'contain' },
   typography: {
     heroFont: 'great-vibes',
     heroCase: 'original',
@@ -31,9 +31,9 @@ window.LOVE_DEFAULTS = {
     meetCaption: 'One ordinary college day. One unforgettable beginning.',
     sittingTitle: 'The conversations that became home',
     sittingCaption: 'We kept talking, and somehow the rest of the world grew quiet.',
-    ribbonPrompt: 'A new memory is tied inside this little heart. Tap to untie the ribbon.',
-    poetryTitle: 'Love, Written in Little Moments',
-    poetryIntro: 'Some things we never said out loud became the loveliest chapters of our story.',
+    ribbonPrompt: 'One little touch, and the next page of our love story begins.',
+    poetryTitle: 'காதல் எழுதிய வரிகள்',
+    poetryIntro: 'முதல் சந்திப்பிலிருந்து வாழ்நாள் வாக்குறுதி வரை... நம் கதையின் மென்மையான கவிதைகள்.',
     proposalTitle: 'The Moment We Chose Forever',
     proposalIntro: 'Every road from the very first hello led to this promise.',
     proposalSecret: 'I do not need a perfect story. I only need every next chapter with you.',
@@ -86,12 +86,12 @@ window.LOVE_DEFAULTS = {
     hero: 'assets/holding-hands.jpg',
     firstMeet: 'assets/flower-moment.jpg',
     proposal: 'assets/little-care.jpg',
+    gift: '',
     music: 'assets/our-song.mp3'
   },
   poetry: [
-    {id:'poem-1', title:'Where Forever Began', verse:'It was only a hello,\nbut it stayed with me for years.\nSomehow the smallest moment\nbecame my favourite forever.'},
-    {id:'poem-2', title:'In Every Ordinary Day', verse:'Not in grand promises,\nbut in little ways you stayed—\nI found my safest place\nin the warmth of your everyday.'},
-    {id:'poem-3', title:'Choose You, Again', verse:'If time returned to our first day,\nand asked what I would do,\nI would smile at all the years ahead\nand choose, once more, you.'}
+    {id:'tamil-1', title:'முதல் பார்வை', verse:'கல்லூரி வாசலில் தொடங்கிய ஒரு பார்வை,\nகாலம் கடந்தும் குறையாத ஓர் ஆசை.\nசொல்லாத வார்த்தைகளைக் கூட உணர்ந்த நெஞ்சம்,\nஇன்று வாழ்நாள் உறவாகக் கை கோர்க்கும் தருணம்.'},
+    {id:'tamil-2', title:'நீயும் நானும்', verse:'நாட்கள் பல மாறினாலும்,\nநம் நினைவுகள் மட்டும் மாறவில்லை.\nநேற்று “நீ” என்று தொடங்கிய கனவு,\nஇன்று “நாம்” என்ற அழகான வாக்குறுதி.'}
   ],
   memories: [
     {
@@ -136,3 +136,9 @@ window.LOVE_THEMES = {
   'champagne': { name: 'Champagne Gold', bg: '#20191a', surface: '#3c2d2e', accent: '#e2b3a5', gold: '#f9ddb2', text: '#fff8eb' },
   'sage': { name: 'Sage & Pearl', bg: '#151d1b', surface: '#293a35', accent: '#b5d0be', gold: '#ebd9b9', text: '#f8fbf4' }
 };
+
+/* One-tap Tamil poetry starter; available in Admin > Client V3 Studio. */
+window.LOVE_TAMIL_POEMS = [
+  {id:'tamil-1', title:'முதல் பார்வை', verse:'கல்லூரி வாசலில் தொடங்கிய ஒரு பார்வை,\nகாலம் கடந்தும் குறையாத ஓர் ஆசை.\nசொல்லாத வார்த்தைகளைக் கூட உணர்ந்த நெஞ்சம்,\nஇன்று வாழ்நாள் உறவாகக் கை கோர்க்கும் தருணம்.'},
+  {id:'tamil-2', title:'நீயும் நானும்', verse:'நாட்கள் பல மாறினாலும்,\nநம் நினைவுகள் மட்டும் மாறவில்லை.\nநேற்று “நீ” என்று தொடங்கிய கனவு,\nஇன்று “நாம்” என்ற அழகான வாக்குறுதி.'}
+];

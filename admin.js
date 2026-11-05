@@ -23,7 +23,7 @@
     {id:'event',name:'Names & Countdown',icon:'◷'},
     {id:'words',name:'Love Words & Quiz',icon:'♡'},
     {id:'memories',name:'Photos & Chapters',icon:'▣'},
-    {id:'romance',name:'Client V2 · Ribbon & Proposal',icon:'🎀'},
+    {id:'romance',name:'Premium V3 · Love Journey',icon:'♡'},
     {id:'timeline',name:'Love Timeline',icon:'✧'},
     {id:'theme',name:'Colors & Music',icon:'♫'},
     {id:'files',name:'Uploaded Files',icon:'⌑'}
@@ -110,6 +110,7 @@
     return header('Your names. Your date. Your forever.','Control the event date, the countdown, the couple names and the words visitors see before your love story opens.')+
       section('The happy couple', `<div class="form-grid">${field('First name','couple.nameOne')}${field('Second name','couple.nameTwo')}</div><div class="form-grid">${field('Story eyebrow / short caption','couple.eyebrow')}${field('Event tag','couple.eventLabel')}</div>${field('City / venue (optional)','couple.city')}`)+
       renderFontStudio()+
+      section('Restore the original premium opening',`<p class="section-sub">Your saved Supabase text/font may still contain old V2 ALL-CAPS settings. This button restores only the opening name font, introductory sentence and desktop alignment. All photos, music, quiz answers and event date remain unchanged.</p><button class="mini-btn" type="button" data-action="restore-premium">Restore Premium Opening Style ♡</button>`)+
       section('Unlock exactly at midnight (IST)', `<div class="form-grid">${field('Engagement date','couple.date','date')}${field('Opening time — Indian Standard Time','couple.time','time')}</div><p class="admin-hint">Set <b>11 November 2026</b> and <b>00:00</b>. Visitors see Days / Hours / Minutes / Seconds before this moment. On or after the date, the whole story stays open — it will not lock again at the next midnight.</p><label class="checkline"><input type="checkbox" data-path="flags.forceOpen" ${state.flags.forceOpen?'checked':''}> Open website immediately, ignoring the countdown (manual override)</label><p class="field-note">Leave this unchecked before 11 November. Use only if you want to publish early.</p>`)+
       section('What visitors see before the unlock',area('Countdown headline','copy.waitingTitle',2)+area('Short emotional countdown message','copy.waitingText',4))+
       section('The first screen after the unlock',area('Opening quote','copy.heroQuote',3)+area('Hero tagline','copy.heroKicker',2)+area('Short line under the first button','copy.heroNote',2)+`<div class="form-grid">${selectField('Name / story alignment','layout.heroAlign', [['left','Left (desktop)'],['center','Center (desktop)']])}${selectField('Hero photo crop / focus','layout.heroFocus', [['top','Top / upper part'],['center','Center'],['bottom','Bottom / lower part']])}</div>`) + publishBar();
@@ -138,12 +139,13 @@
   function renderRomance() {
     const toggles = section('Interactive experience — ON / OFF', `
       <p class="section-sub">Change effects here without editing code. All changes go live only after Publish Changes.</p>
-      <label class="checkline"><input type="checkbox" data-path="features.ribbonTransitions" ${state.features.ribbonTransitions?'checked':''}> Ribbon heart transition between chapters (tap to untie)</label>
+      <label class="checkline"><input type="checkbox" data-path="features.ribbonTransitions" ${state.features.ribbonTransitions?'checked':''}> Enable signature heart reveal (only once)</label>
+      ${selectField('Where to show heart-drawing animation?','features.ribbonMoment',[['intro','Only after opening page (recommended)'],['final','Only before final love letter & gift'],['off','Disable animation']])}
       <label class="checkline"><input type="checkbox" data-path="features.poetry" ${state.features.poetry?'checked':''}> Show romantic poetry chapter</label>
       <label class="checkline"><input type="checkbox" data-path="features.proposal" ${state.features.proposal?'checked':''}> Show proposal / promise chapter</label>
       <label class="checkline"><input type="checkbox" data-path="features.fallingHearts" ${state.features.fallingHearts?'checked':''}> Show subtle falling hearts on all pages</label>
       ${area('Ribbon heart message','copy.ribbonPrompt',3)}
-      <p class="admin-hint">The ribbon works only at unlocked chapter transitions. Quiz and puzzle must still be solved before proceeding.</p>`);
+      <p class="admin-hint">This heart is drawn ONCE, never after every page. The original quiz and puzzle stay intact.</p>`);
 
     const photo = (title,key,tip) => `<div class="v2-media-item"><div><span class="eyebrow">${esc(title)}</span><div class="v2-image-preview"><img src="${safeUrl(state.media[key])}" alt="${esc(title)}"></div></div><div class="file-actions"><p class="section-sub">${esc(tip)}</p><label>Upload / replace ${esc(title)}<input type="file" accept="image/jpeg,image/png,image/webp,image/*" data-upload="v2-${esc(key)}"></label><button class="mini-btn" type="button" data-action="reset-v2-media" data-key="${esc(key)}">Use starter illustration</button></div></div>`;
 
@@ -165,14 +167,19 @@
     const poems=(state.poetry||[]).map((poem,i)=>`<div class="editor-card"><div class="editor-row"><h4>Poetry Card ${i+1}</h4><div class="mini-buttons"><button class="mini-btn" type="button" data-action="move-poem" data-index="${i}" data-dir="-1" ${i===0?'disabled':''}>↑</button><button class="mini-btn" type="button" data-action="move-poem" data-index="${i}" data-dir="1" ${i===(state.poetry.length-1)?'disabled':''}>↓</button><button class="mini-btn warn" type="button" data-action="delete-poem" data-index="${i}" ${state.poetry.length<=1?'disabled':''}>Delete</button></div></div>${field('Short title',`poetry.${i}.title`)}${area('Poem / personal lines',`poetry.${i}.verse`,5)}</div>`).join('');
     const poetry=section('Love poetry & novel-like writing',`
       ${area('Poetry chapter heading','copy.poetryTitle',2)}${area('Poetry introduction','copy.poetryIntro',3)}
-      ${poems}<button type="button" class="button button-outline" data-action="add-poem">+ Add poetry card</button>
+      <button type="button" class="mini-btn" data-action="load-tamil-poetry">தமிழ் காதல் கவிதையைச் சேர்க்கவும் ♡</button><p class="field-note">Tamil text works directly in this field. You can edit it with your phone keyboard and publish.</p>${poems}<button type="button" class="button button-outline" data-action="add-poem">+ Add poetry card</button>
       ${field('Continue from poetry button','copy.ctaPoetryNext')}
       <p class="field-note">All texts are editable. Replace starter poetry with the couple's own lines when provided.</p>`);
 
-    const gift=section('The sweet final surprise',`
-      ${selectField('Choose gift decoration','gifts.style',[['rose-chocolates','Rose between two chocolates (premium)'],['rose-teddy','Rose + chocolate + teddy bear']])}
-      ${area('Gift title','copy.giftTitle',2)}${area('Final sweet message','copy.giftMessage',4)}
-      <p class="admin-hint">The gift decoration is made with HTML/CSS; no external image is required.</p>`);
+    const gift=section('Final surprise gift photo · Upload / Replace',`
+      <p class="section-sub">Add your own rose, chocolates, teddy or hamper picture here. Use Full photo to show the complete image without cutting the edges.</p>
+      <div class="v2-media-item"><div class="v2-image-preview gift-admin-preview">${state.media.gift ? `<img src="${safeUrl(state.media.gift)}" alt="Final gift photo">` : `<div class="gift-admin-empty">♡<br><small>No gift photo yet</small></div>`}</div>
+      <div class="file-actions"><label>Choose / replace gift image<input type="file" accept="image/*" data-upload="v2-gift"></label>
+      ${state.media.gift ? `<button type="button" class="mini-btn warn" data-action="remove-gift">Remove gift photo</button>` : ''}
+      <p class="field-note">JPG / PNG / WebP · up to 10 MB. Photos stay in Supabase Storage.</p></div></div>
+      ${selectField('Gift photo fit','layout.giftFit',[['contain','Full photo - never crop (recommended)'],['cover','Fill frame - may crop']])}
+      ${area('Gift title','copy.giftTitle',2)}${area('Gift closing message','copy.giftMessage',4)}
+      <p class="admin-hint">After choosing the gift image, click Publish Changes. The public website will show that photo instead of the placeholder. To change it later, upload a new image and publish again.</p>`);
 
     return header('Client Version 2 — your romantic direction.','Manage the first-meet photo, chapter-opening ribbon heart, proposal memory, poetry cards and final rose gifts here. Existing photo uploads and login are preserved.') + toggles+cover+proposal+poetry+gift+publishBar();
   }
@@ -235,6 +242,7 @@
       if(target==='hero')state.media.hero=await uploadAsset(input.files[0],'photo');
       if(target==='v2-firstMeet')state.media.firstMeet=await uploadAsset(input.files[0],'photo');
       if(target==='v2-proposal')state.media.proposal=await uploadAsset(input.files[0],'photo');
+      if(target==='v2-gift')state.media.gift=await uploadAsset(input.files[0],'photo');
       if(target==='music'){state.media.music=await uploadAsset(input.files[0],'music');state.flags.musicEnabled=true;}
       if(target==='timeline')state.timeline[Number(input.dataset.index)].image=await uploadAsset(input.files[0],'photo');
       if(target==='chapter') {
@@ -337,6 +345,9 @@
     const b=event.target.closest('[data-action]');if(!b || b.disabled)return;
     const action=b.dataset.action,index=Number(b.dataset.index),direction=Number(b.dataset.dir);
     if(action==='save')return publish();
+    if(action==='remove-gift'){state.media.gift='';markDirty();render();return;}
+    if(action==='restore-premium'){state.typography=clone(window.LOVE_DEFAULTS.typography);state.copy.heroKicker='One beautiful beginning. A lifetime of tomorrows.';state.layout.heroAlign='left';if(String(state.couple.nameOne).toLowerCase()==='ayyapan')state.couple.nameOne='Ayyapan';if(String(state.couple.nameTwo).toLowerCase()==='arthi')state.couple.nameTwo='Arthi';markDirty();render();showToast('Original premium opening restored in editor. Publish Changes to make it live.');return;}
+    if(action==='load-tamil-poetry'){state.poetry=clone(window.LOVE_TAMIL_POEMS);state.copy.poetryTitle='காதல் எழுதிய வரிகள்';state.copy.poetryIntro='முதல் சந்திப்பிலிருந்து வாழ்நாள் வாக்குறுதி வரை... நம் கதையின் மென்மையான கவிதைகள்.';markDirty();render();showToast('Tamil poems added in editor. You can edit and publish them.');return;}
     if(action==='reset-v2-media'){const key=b.dataset.key;if(['firstMeet','proposal'].includes(key)){state.media[key]=window.LOVE_DEFAULTS.media[key];markDirty();render();}return;}
     if(action==='add-poem'){state.poetry.push({id:'poem-'+Date.now(),title:'One more love note',verse:'Write a little poem from your heart...'});markDirty();render();return;}
     if(action==='delete-poem'){if(state.poetry.length>1 && confirm('Delete this poetry card?')){state.poetry.splice(index,1);markDirty();render();}return;}

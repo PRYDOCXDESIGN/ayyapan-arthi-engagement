@@ -8,7 +8,7 @@
   <title>Ayyapan ♡ Arthi | From College Days to Forever</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&amp;family=Allura&amp;family=Cormorant+Garamond:wght@400;600&amp;family=DM+Sans:wght@400;500;600;700&amp;family=Dancing+Script:wght@400;600&amp;family=Great+Vibes&amp;family=Italiana&amp;family=Parisienne&amp;family=Pinyon+Script&amp;family=Playfair+Display:wght@400;600&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&amp;family=Allura&amp;family=Cormorant+Garamond:wght@400;600&amp;family=DM+Sans:wght@400;500;600;700&amp;family=Dancing+Script:wght@400;600&amp;family=Great+Vibes&amp;family=Italiana&amp;family=Parisienne&amp;family=Pinyon+Script&amp;family=Noto+Serif+Tamil:wght@400;500;600&amp;family=Playfair+Display:wght@400;600&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="site-body">
@@ -19,36 +19,31 @@
 
   <div id="site" class="site" hidden>
     <header class="site-header">
-      <div class="brandmark" aria-label="Our story"><span id="brand-initials">A <i>♥</i> A</span><small>OUR LITTLE FOREVER</small></div>
+      <div class="brandmark" aria-label="Our story"><span id="brand-initials">A <i>&hearts;</i> A</span><small>OUR LITTLE FOREVER</small></div>
       <div class="header-right"><span id="progress-label">CHAPTER 01 / 10</span><span class="tiny-sparkle">✧</span></div>
     </header>
     <div class="chapter-progress" aria-hidden="true"><span id="progress-bar"></span></div>
     <main id="scenes" aria-live="polite"></main>
-    <nav class="chapter-nav" aria-label="Story controls"><button id="nav-back" class="text-nav" type="button">← Previous chapter</button><span id="chapter-caption">A love story, just for you</span><button id="nav-next" class="text-nav nav-next-ribbon" type="button" aria-label="Open next chapter through ribbon heart"><span class="mini-ribbon-heart" aria-hidden="true">♥<i>✦</i></span><span>Next memory</span></button></nav>
+    <nav class="chapter-nav" aria-label="Story controls"><button id="nav-back" class="text-nav" type="button">← Previous chapter</button><span id="chapter-caption">A love story, just for you</span><button id="nav-next" class="text-nav" type="button">Next chapter →</button></nav>
     <footer class="site-footer"><span class="footer-monogram" id="footer-names">Ayyapan ♡ Arthi</span><span>From our first hello to forever</span><span id="footer-date">11 November 2026</span></footer>
   </div>
 
 
-  <!-- Accessible two-tap ribbon-heart scene transition -->
-  <div id="ribbon-transition" class="ribbon-transition" hidden role="dialog" aria-modal="true" aria-label="Unlock the next memory">
-    <div class="ribbon-stars" aria-hidden="true">✧ &nbsp; ♡ &nbsp; ✦</div>
+  <!-- Signature traced-heart reveal: appears ONCE at the chosen moment. -->
+  <div id="ribbon-transition" class="ribbon-transition" hidden role="dialog" aria-modal="true" aria-label="Open the next memory">
     <div class="ribbon-content">
-      <span class="eyebrow">ONE MORE LITTLE SECRET</span>
-      <h2 id="ribbon-title">A memory is waiting inside...</h2>
-      <button id="ribbon-heart-trigger" class="ribbon-heart-trigger" type="button" aria-label="Untie ribbon and open heart">
-        <span class="heart-door left" aria-hidden="true">♥</span>
-        <span class="heart-door right" aria-hidden="true">♥</span>
-        <span class="ribbon-glow" aria-hidden="true"></span>
-        <span class="ribbon-band" aria-hidden="true"></span>
-        <span class="ribbon-tail tail-left" aria-hidden="true"></span>
-        <span class="ribbon-tail tail-right" aria-hidden="true"></span>
-        <span class="ribbon-bow bow-left" aria-hidden="true"></span>
-        <span class="ribbon-bow bow-right" aria-hidden="true"></span>
-        <span class="ribbon-knot" aria-hidden="true"></span>
-        <span class="heart-peek" aria-hidden="true"><img id="ribbon-peek-image" src="assets/flower-moment.jpg" alt=""></span>
+      <span class="eyebrow">A LITTLE SECRET IS WAITING</span>
+      <h2 id="ribbon-title">Every love story has a next page.</h2>
+      <button id="ribbon-heart-trigger" class="ribbon-heart-trigger" type="button" aria-label="Touch the heart to reveal the next chapter">
+        <svg viewBox="0 0 400 380" aria-hidden="true" focusable="false">
+          <path class="heart-guide" d="M200 327C159 287 67 234 67 145C67 79 147 51 200 111C253 51 333 79 333 145C333 234 241 287 200 327" />
+          <path class="heart-trace" d="M200 327C159 287 67 234 67 145C67 79 147 51 200 111C253 51 333 79 333 145C333 234 241 287 200 327" />
+        </svg>
+        <span class="heart-touch-label">touch to open <span aria-hidden="true">♡</span></span>
+        <span class="heart-reveal-photo" aria-hidden="true"><img id="ribbon-peek-image" src="assets/flower-moment.jpg" alt=""></span>
       </button>
-      <p id="ribbon-help">Tap the heart to untie our next chapter ♡</p>
-      <button id="ribbon-skip" class="transition-skip" type="button">Continue without animation →</button>
+      <p id="ribbon-help">One little touch, and our story continues.</p>
+      <button id="ribbon-skip" class="transition-skip" type="button">Continue directly →</button>
     </div>
   </div>
 
